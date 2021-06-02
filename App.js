@@ -6,14 +6,16 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import AccountScreen from './screens/Accounts';
-import Products from './screens/Products';
-import LoadingScreen from './screens/LoadingScreen'
-import Profile from './screens/Profile';
-import HomeScreen from './screens/HomeScreen';
+import AccountScreen from './src/screens/Accounts';
+import Products from './src/screens/Products';
+import LoadingScreen from './src/screens/LoadingScreen'
+import Profile from './src/screens/Profile';
+import HomeScreen from './src/screens/HomeScreen';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import SignupScreen from './screens/Signup';
-import SignInScreen from './screens/Signin';
+import SignupScreen from './src/screens/Signup';
+import SignInScreen from './src/screens/Signin';
+import ChooseType from './src/screens/ChooseType';
+import ConsumerSignin from './src/screens/ConsumerSignin';
 
 const Stack = createStackNavigator();
 
@@ -66,6 +68,8 @@ function App() {
         <Stack.Screen name="Signin" component={SignInScreen} />
         <Stack.Screen name="Signup" component={SignupScreen} />
         <Stack.Screen  name="MainNav" component={Personal} />
+        <Stack.Screen name="ChooseType" component={ChooseType} />
+        <Stack.Screen name="ConsumerSignin" component={ConsumerSignin} />
       </Stack.Navigator>
     </NavigationContainer>
   );
