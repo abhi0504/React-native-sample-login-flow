@@ -16,6 +16,8 @@ import SignupScreen from './src/screens/Signup';
 import SignInScreen from './src/screens/Signin';
 import ChooseType from './src/screens/ChooseType';
 import ConsumerSignin from './src/screens/ConsumerSignin';
+import ConsumerSignup1 from './src/screens/ConsumerSignup1';
+import ConsumerSignup2 from './src/screens/ConsumerSignup2';
 import SellerSignin from './src/screens/seller/SellerSignin';
 import SellerSignUp from './src/screens/seller/SellerSignUp';
 import SellerSignUp2 from './src/screens/seller/sellerSignUp2';
@@ -74,6 +76,8 @@ function App() {
         <Stack.Screen name="Loading" component={LoadingScreen} />
         <Stack.Screen name="ChooseType" component={ChooseType} />
         <Stack.Screen name="ConsumerSignin" component={ConsumerSignin} />
+        <Stack.Screen name="ConsumerSignup1" component={ConsumerSignup1} />
+        <Stack.Screen name="ConsumerSignup2" component={ConsumerSignup2} />
         <Stack.Screen name="SellerSignin" component={SellerSignin} />
         <Stack.Screen name="SellerSignUp" component={SellerSignUp} />
         <Stack.Screen name="SellerSignUp2" component={SellerSignUp2} />
