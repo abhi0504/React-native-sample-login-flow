@@ -16,6 +16,8 @@ import SignupScreen from './src/screens/Signup';
 import SignInScreen from './src/screens/Signin';
 import ChooseType from './src/screens/ChooseType';
 import ConsumerSignin from './src/screens/ConsumerSignin';
+import ConsumerSignup1 from './src/screens/ConsumerSignup1';
+import ConsumerSignup2 from './src/screens/ConsumerSignup2';
 
 const Stack = createStackNavigator();
 
@@ -70,6 +72,8 @@ function App() {
         <Stack.Screen  name="MainNav" component={Personal} />
         <Stack.Screen name="ChooseType" component={ChooseType} />
         <Stack.Screen name="ConsumerSignin" component={ConsumerSignin} />
+        <Stack.Screen name="ConsumerSignup1" component={ConsumerSignup1} />
+        <Stack.Screen name="ConsumerSignup2" component={ConsumerSignup2} />
       </Stack.Navigator>
     </NavigationContainer>
   );

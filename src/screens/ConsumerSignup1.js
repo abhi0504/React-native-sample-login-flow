@@ -6,35 +6,34 @@ import { Header } from '@react-navigation/stack';
 
 const {height,width} = Dimensions.get('window')
 //<Image source={require('../images/bg1.jpg')} resizeMode="cover" style={{height:height/1.75,width:width}} />
-function ConsumerSignin(props) {
-    const [email,setEmail] = React.useState('');
-    const [password,setPassword] = React.useState('');
+function ConsumerSignup1(props) {
+    const [name,setName] = React.useState('');
+    const [contact,setContact] = React.useState('');
     const keyboardVerticalOffset = Platform.OS === 'ios' ? 40 : 40
     return (
         <KeyboardAvoidingView keyboardVerticalOffset={-500} behavior="padding" enabled style={{flex:1,backgroundColor:'white'}}>
             <ScrollView>
             <ImageBackground source={require('../images/bg1.jpg')} resizeMode="cover" style={{height:height/1.75,width:width,justifyContent:'center'}} >
-                <Text style={{color:'white',fontSize:29,fontWeight:'600',padding:15,paddingBottom:0}}>Support Local</Text>
-                <Text style={{color:'white',fontSize:29,fontWeight:'600',paddingLeft:15}}>Buisnesses</Text>
+                <Text style={{color:'white',fontSize:29,fontWeight:'600',alignSelf:'center'}}>Choose Your Profilepic</Text>
                 </ImageBackground>
                 <View style={{flexDirection:'row'}}>
-                    <TextInput style={styles.input} value={email} placeholder="Email" onChangeText={(val) => setEmail(val)} />
+                    <TextInput style={styles.input} value={name} placeholder="Name" onChangeText={(val) => setName(val)} />
                 </View>
                 <View style={{flexDirection:'row'}}>
-                    <TextInput style={styles.input} value={password} placeholder="Password" onChangeText={(val) => setPassword(val)} />
+                    <TextInput style={styles.input} value={contact} placeholder="Contact" onChangeText={(val) => setContact(val)} />
                 </View>
                 <View>
-                    <TouchableOpacity style={{width:width-75,alignItems:'center',marginTop:25,borderRadius:9,height:50,backgroundColor:'#ff4500',alignSelf:'center',justifyContent:'center'}}>
+                    <TouchableOpacity onPress={() => props.navigation.push('ConsumerSignup2')} style={{width:width-75,alignItems:'center',marginTop:25,borderRadius:9,height:50,backgroundColor:'#ff4500',alignSelf:'center',justifyContent:'center'}}>
                         <View>
-                        <Text style={{color:'white',fontSize:21}}>Log in</Text>
+                        <Text style={{color:'white',fontSize:21}}>NEXT</Text>
                         </View>
                     </TouchableOpacity>
                     <View style={{alignItems:'center',marginTop:15,marginBottom:15}}>
                         <Text>OR</Text>
                     </View>
-                    <TouchableOpacity onPress={() => props.navigation.push('ConsumerSignup1',{email:email,password:password})} style={{width:width-75,alignItems:'center',marginTop:0,borderRadius:9,height:50,backgroundColor:'white',borderWidth:1,borderColor:'gray',alignSelf:'center',justifyContent:'center'}}>
+                    <TouchableOpacity onPress={() => props.navigation.pop()} style={{width:width-75,alignItems:'center',marginTop:0,borderRadius:9,height:50,backgroundColor:'white',borderWidth:1,borderColor:'gray',alignSelf:'center',justifyContent:'center'}}>
                         <View>
-                        <Text style={{color:'gray',fontSize:21}}>Signup</Text>
+                        <Text style={{color:'gray',fontSize:21}}>Log in</Text>
                         </View>
                     </TouchableOpacity>
                 </View>
@@ -57,4 +56,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default ConsumerSignin;
+export default ConsumerSignup1;
