@@ -1,0 +1,146 @@
+import React, { Component } from 'react';
+import { Text , View , Dimensions , StyleSheet , Image, TextInput, TouchableOpacity} from 'react-native';
+import CheckBox from 'react-native-check-box'
+
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
+
+class SigninComponent extends Component {
+    state = { isChecked: false };
+  render() {
+    return (
+        <View>
+            <View style={{marginLeft: windowWidth*0.1 , marginTop: windowHeight*0.04}}>
+                <Text style={{fontSize: windowWidth*0.075 , fontFamily: "Montserrat-Bold"}}>Welcome to KED!</Text>
+                <Text style={styles.labels}>Login to your account</Text>
+            </View>
+            <View style={{marginTop: 20}}>
+                <Text style={[styles.labels , {marginLeft: windowWidth*0.1}]}>Email</Text>
+                <View>
+                    <TextInput 
+                        style={styles.input}
+                        onChangeText={() => {}}
+                        // value={text}
+                        placeholder="Email"
+                    />
+                </View>
+            </View>
+            <View style={{marginTop: 20}}>
+                <Text style={[styles.labels , {marginLeft: windowWidth*0.1}]}>Password</Text>
+                <View>
+                    <TextInput 
+                        style={styles.input}
+                        onChangeText={() => {}}
+                        // value={text}
+                        placeholder="Password" 
+                    /> 
+                </View>
+            </View>
+            <View style={{flexDirection: "row" , marginTop: 10}}>
+            <CheckBox
+            style={{marginLeft: windowWidth*0.1 }}
+            onClick={()=>{
+              this.setState({
+              isChecked:!this.state.isChecked
+              })
+             }}
+            isChecked={this.state.isChecked}
+            />
+            <Text style={[styles.labels , {marginTop: 2}]}>REMEMBER ME</Text>
+            </View>
+            <View style={{marginLeft: windowWidth*0.1 , marginTop: windowHeight*0.025}}>
+             <View style={styles.bootombar}>
+                 <View style={{marginLeft: 5}}>
+                   <Text style={{color: "#0ae38c" , fontFamily: "Montserrat-Light" , }}>Forgot Password ?</Text>
+                 </View>
+                     <View>
+                        <Text style={{color: "grey" , fontFamily: 'Montserrat-Light'}}>Don't have an account</Text>
+                     </View>
+             </View>
+             <View style={{alignItems: "flex-end" , marginRight: windowWidth*0.1 }}>
+                     <Text style={{color: "grey" , fontFamily: 'Montserrat-Light' }}>Sign Up</Text>
+                   </View>
+            </View>
+           <View style={{alignItems: "center" , marginTop: 15}}>
+                <TouchableOpacity style={styles.submit}>
+                     <Text style={{color: "white" , fontFamily: 'Montserrat-Bold' , fontSize: windowHeight*0.025 }} >
+                         Login
+                     </Text>
+                </TouchableOpacity>
+                <Text style={{color: "grey" , fontFamily: 'Montserrat-Light' , margin: 10}}>Login account with</Text>
+            </View> 
+
+            <View style={{flexDirection: "row" , justifyContent: "center"}}>
+                <Image style={{
+                height: windowHeight*0.05,
+                width: windowHeight*0.05,
+              }}
+              source={require('../assets/loginImages/MediaHandles/GoogleSignUp.png')}/>
+              <Image style={{
+                height: windowHeight*0.05,
+                width: windowHeight*0.05,
+              }}
+              source={require('../assets/loginImages/MediaHandles/FacebookSignUp.png')}/>
+              <Image style={{
+                height: windowHeight*0.05,
+                width: windowHeight*0.05,
+              }}
+              source={require('../assets/loginImages/MediaHandles/LinkedinSignUp.png')}/>
+            </View>
+            
+            
+        </View>
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  navbar: {
+    width: windowWidth, 
+    height: windowHeight*0.1, 
+    backgroundColor: "#162239",
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  navbarIcon1: {
+    width: windowWidth*0.8, 
+    height: windowHeight*0.05,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between"
+  },
+  labels: {
+    fontSize: windowWidth*0.035 , fontFamily: "Montserrat-Bold" , color: "#7c7c7c"
+  },
+  input: {
+    height: windowHeight*0.05,
+    width: windowWidth*0.8,
+    marginLeft: windowWidth*0.1 ,
+    marginTop: 8,
+    borderWidth: 1,
+    borderRadius: 5,
+    borderColor: "#7c7c7c",
+    fontFamily: "Montserrat-Light",
+    padding: 10
+  },
+  checkbox: {
+    alignSelf: "center",
+  },
+  bootombar: {
+    width: windowWidth*0.8, 
+    height: windowHeight*0.05,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between"
+  },
+  submit: {
+      width: windowWidth*0.5,
+      height: windowHeight*0.06,
+      backgroundColor: "#0ae38c",
+      borderRadius: 40,
+      alignItems: "center",
+      justifyContent: "center"
+  }
+});
+
+export default SigninComponent;

@@ -11,7 +11,7 @@ class Navbar extends Component {
             <View style={styles.navbar}> 
               <View style={styles.navbarIcon1}>
                 <View style={{marginLeft: 5}}>
-                  <Text style={{color: "white" , fontFamily: "Montserrat-ExtraBold" , fontSize: windowHeight*0.04}}>KED</Text>
+                  <Text style={{color: "white" , fontFamily: "Montserrat-ExtraBold" , fontSize: windowHeight*0.04}}>SHOPY</Text>
                 </View>
                 <View  style={{marginRight: 5}}>
                   <Text style={{color: "white" , fontFamily: 'Montserrat-Bold'}}>Home</Text>
