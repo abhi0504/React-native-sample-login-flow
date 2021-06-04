@@ -14,7 +14,7 @@ function ChooseType(props) {
             <View style={{height:15}}>
 
             </View>
-            <StyleButton onPressButton={() => props.navigation.push("ConsumerSignin")} color='white' fontSize={21} height={51.5} width={width-50} backgroundColor='#6495ed' borderRadius={9} title='Shop Owner' />
+            <StyleButton onPressButton={() => props.navigation.push("SellerSignin")} color='white' fontSize={21} height={51.5} width={width-50} backgroundColor='#6495ed' borderRadius={9} title='Shop Owner' />
         </View>
     )
 }

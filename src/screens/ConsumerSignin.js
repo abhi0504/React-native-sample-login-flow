@@ -8,7 +8,7 @@ const {height,width} = Dimensions.get('window')
 function ConsumerSignin() {
     return (
         <View style={{flex:1,backgroundColor:'white',alignItems:'center',justifyContent:'center'}}>
-            <Text>Hii</Text>
+            <Text>Hi</Text>
         </View>
     )
 }

@@ -13,9 +13,9 @@ class Navbar extends Component {
                 <View style={{marginLeft: 5}}>
                   <Text style={{color: "white" , fontFamily: "Montserrat-ExtraBold" , fontSize: windowHeight*0.04}}>SHOPY</Text>
                 </View>
-                <View  style={{marginRight: 5}}>
+                {/* <View  style={{marginRight: 5}}>
                   <Text style={{color: "white" , fontFamily: 'Montserrat-Bold'}}>Home</Text>
-                </View>
+                </View> */}
               </View>
             </View>
         </View>

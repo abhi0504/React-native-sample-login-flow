@@ -11,7 +11,7 @@ class SigninComponent extends Component {
     return (
         <View>
             <View style={{marginLeft: windowWidth*0.1 , marginTop: windowHeight*0.04}}>
-                <Text style={{fontSize: windowWidth*0.075 , fontFamily: "Montserrat-Bold"}}>Welcome to KED!</Text>
+                <Text style={{fontSize: windowWidth*0.075 , fontFamily: "Montserrat-Bold"}}>Welcome to SHOPY!</Text>
                 <Text style={styles.labels}>Login to your account</Text>
             </View>
             <View style={{marginTop: 20}}>
@@ -58,7 +58,9 @@ class SigninComponent extends Component {
                      </View>
              </View>
              <View style={{alignItems: "flex-end" , marginRight: windowWidth*0.1 }}>
+                    <TouchableOpacity onPress={() => {this.props.signUp.navigate("SellerSignUp")}}>
                      <Text style={{color: "grey" , fontFamily: 'Montserrat-Light' }}>Sign Up</Text>
+                    </TouchableOpacity>
                    </View>
             </View>
            <View style={{alignItems: "center" , marginTop: 15}}>
@@ -75,17 +77,17 @@ class SigninComponent extends Component {
                 height: windowHeight*0.05,
                 width: windowHeight*0.05,
               }}
-              source={require('../assets/loginImages/MediaHandles/GoogleSignUp.png')}/>
+              source={require('../../assets/loginImages/MediaHandles/GoogleSignUp.png')}/>
               <Image style={{
                 height: windowHeight*0.05,
                 width: windowHeight*0.05,
               }}
-              source={require('../assets/loginImages/MediaHandles/FacebookSignUp.png')}/>
+              source={require('../../assets/loginImages/MediaHandles/FacebookSignUp.png')}/>
               <Image style={{
                 height: windowHeight*0.05,
                 width: windowHeight*0.05,
               }}
-              source={require('../assets/loginImages/MediaHandles/LinkedinSignUp.png')}/>
+              source={require('../../assets/loginImages/MediaHandles/LinkedinSignUp.png')}/>
             </View>
             
             
