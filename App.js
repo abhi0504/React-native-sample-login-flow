@@ -18,6 +18,9 @@ import ChooseType from './src/screens/ChooseType';
 import ConsumerSignin from './src/screens/ConsumerSignin';
 import SellerSignin from './src/screens/seller/SellerSignin';
 import SellerSignUp from './src/screens/seller/SellerSignUp';
+import SellerSignUp2 from './src/screens/seller/sellerSignUp2';
+import SellerSignUp3 from './src/screens/seller/sellerSignUp3';
+
 
 
 
@@ -73,6 +76,8 @@ function App() {
         <Stack.Screen name="ConsumerSignin" component={ConsumerSignin} />
         <Stack.Screen name="SellerSignin" component={SellerSignin} />
         <Stack.Screen name="SellerSignUp" component={SellerSignUp} />
+        <Stack.Screen name="SellerSignUp2" component={SellerSignUp2} />
+        <Stack.Screen name="SellerSignUp3" component={SellerSignUp3} />
 
       </Stack.Navigator>
     </NavigationContainer>

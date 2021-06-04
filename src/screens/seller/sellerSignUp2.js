@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
-import { Text , View , Dimensions , StyleSheet , Image , TextInput , TouchableOpacity , KeyboardAvoidingView, ScrollView} from 'react-native';
+import { Text , View , Dimensions , StyleSheet , Image , TextInput , TouchableOpacity} from 'react-native';
 import Navbar from '../../components/Navbar'
 
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-function SellerSignUp (props) {
+function SellerSignUp2 (props) {
     return (
-      
         <View style={{flex: 1}}>
             <View>
             <Image
@@ -20,73 +19,66 @@ function SellerSignUp (props) {
               source={require('../../../assets/loginImages/AngleTopLeft.png')}
             />
             </View>
-
-            <KeyboardAvoidingView>
-            <ScrollView>
             
             <View>
-            <View style={{marginLeft: windowWidth*0.1 , marginTop: windowHeight*0.04}}>
-                <Text style={{fontSize: windowWidth*0.075 , fontFamily: "Montserrat-Bold"}}>New to SHOPY!</Text>
-                <Text style={styles.labels}>Register Here</Text>
-            </View>
             <View style={{marginTop: 20}}>
-                <Text style={[styles.labels , {marginLeft: windowWidth*0.1}]}>Shop Name</Text>
+                <Text style={[styles.labels , {marginLeft: windowWidth*0.1}]}>Shop Address</Text>
                 <View>
                     <TextInput 
                         style={styles.input}
                         onChangeText={() => {}}
                         // value={text}
-                        placeholder="Shop Name"
+                        placeholder="Shop Address"
                     />
                 </View>
             </View>
             <View style={{marginTop: 20}}>
-                <Text style={[styles.labels , {marginLeft: windowWidth*0.1}]}>Owner Name</Text>
+                <Text style={[styles.labels , {marginLeft: windowWidth*0.1}]}>Contact No.</Text>
                 <View>
                     <TextInput 
                         style={styles.input}
                         onChangeText={() => {}}
                         // value={text}
-                        placeholder="Owner Name" 
+                        placeholder="Contact No." 
                     /> 
                 </View>
             </View>
             <View style={{marginTop: 20}}>
-                <Text style={[styles.labels , {marginLeft: windowWidth*0.1}]}>Email/Username</Text>
+                <Text style={[styles.labels , {marginLeft: windowWidth*0.1}]}>Description of Shop</Text>
                 <View>
                     <TextInput 
                         style={styles.input}
                         onChangeText={() => {}}
                         // value={text}
-                        placeholder="Email/Username" 
+                        placeholder="Description of Shop" 
                     /> 
                 </View>
             </View>
             <View style={{marginTop: 20}}>
-                <Text style={[styles.labels , {marginLeft: windowWidth*0.1}]}>Password</Text>
+                <Text style={[styles.labels , {marginLeft: windowWidth*0.1}]}>Shop Timings</Text>
                 <View>
                     <TextInput 
                         style={styles.input}
                         onChangeText={() => {}}
                         // value={text}
-                        placeholder="Password" 
+                        placeholder="Shop Timings" 
                     /> 
                 </View>
             </View>
             <View style={{marginTop: 20}}>
-                <Text style={[styles.labels , {marginLeft: windowWidth*0.1}]}>Repeat Password</Text>
+                <Text style={[styles.labels , {marginLeft: windowWidth*0.1}]}>UPI-ID / PAYTM / PHONEPAY / GOOGLEPAY</Text>
                 <View>
                     <TextInput 
                         style={styles.input}
                         onChangeText={() => {}}
                         // value={text}
-                        placeholder="Repeat Password" 
+                        placeholder="UPI-ID / PAYTM / PHONEPAY / GOOGLEPAY" 
                     /> 
                 </View>
             </View>
            <View style={{alignItems: "center" , marginTop: 15}}>
                 <TouchableOpacity style={styles.submit} onPress={() => {
-                    props.navigation.navigate("SellerSignUp2")
+                    props.navigation.navigate("SellerSignUp3")
                 }}>
                      <Text style={{color: "white" , fontFamily: 'Montserrat-Bold' , fontSize: windowHeight*0.025 }} >
                          Next
@@ -94,8 +86,6 @@ function SellerSignUp (props) {
                 </TouchableOpacity>
             </View>      
         </View>
-        </ScrollView>
-    </KeyboardAvoidingView>
 
             <View style={{
                 flex: 1,
@@ -164,4 +154,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default SellerSignUp;
+export default SellerSignUp2;

@@ -10,7 +10,7 @@ const windowHeight = Dimensions.get('window').height;
 function SellerSignin (props) {
     return (
         <View style={{flex: 1}}>
-          <Navbar />
+          {/* <Navbar /> */}
             <View>
             <Image
               style={{
