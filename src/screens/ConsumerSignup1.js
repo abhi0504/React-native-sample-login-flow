@@ -10,6 +10,9 @@ function ConsumerSignup1(props) {
     const [name,setName] = React.useState('');
     const [contact,setContact] = React.useState('');
     const keyboardVerticalOffset = Platform.OS === 'ios' ? 40 : 40
+    console.log(props.route)
+    const email = props.route.params.email
+    const password = props.route.params.password
     return (
         <KeyboardAvoidingView keyboardVerticalOffset={-500} behavior="padding" enabled style={{flex:1,backgroundColor:'white'}}>
             <ScrollView>
@@ -23,7 +26,7 @@ function ConsumerSignup1(props) {
                     <TextInput style={styles.input} value={contact} placeholder="Contact" onChangeText={(val) => setContact(val)} />
                 </View>
                 <View>
-                    <TouchableOpacity onPress={() => props.navigation.push('ConsumerSignup2')} style={{width:width-75,alignItems:'center',marginTop:25,borderRadius:9,height:50,backgroundColor:'#ff4500',alignSelf:'center',justifyContent:'center'}}>
+                    <TouchableOpacity onPress={() => props.navigation.push('ConsumerSignup2',{email,password,name,contact})} style={{width:width-75,alignItems:'center',marginTop:25,borderRadius:9,height:50,backgroundColor:'#ff4500',alignSelf:'center',justifyContent:'center'}}>
                         <View>
                         <Text style={{color:'white',fontSize:21}}>NEXT</Text>
                         </View>
