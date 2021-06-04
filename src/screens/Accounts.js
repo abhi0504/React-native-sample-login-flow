@@ -9,7 +9,7 @@ function AccountScreen() {
 
     return (
         <View>
-            <Text>HI</Text>
+            <Text>HELLO HELLO</Text>
         </View>
     )
 }
