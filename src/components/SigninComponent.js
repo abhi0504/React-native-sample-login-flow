@@ -6,7 +6,17 @@ const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 class SigninComponent extends Component {
-    state = { isChecked: false };
+
+   loginHandler = () => {
+    console.log(this.state.email);
+    console.log(this.state.pass);
+  }
+
+    state = {
+       isChecked: false ,
+       email: "",
+       pass: ""
+     };
   render() {
     return (
         <View>
@@ -19,8 +29,12 @@ class SigninComponent extends Component {
                 <View>
                     <TextInput 
                         style={styles.input}
-                        onChangeText={() => {}}
-                        // value={text}
+                        onChangeText={(text) => {
+                          this.setState({
+                            email : text
+                          })
+                        }}
+                        value={this.state.email}
                         placeholder="Email"
                     />
                 </View>
@@ -30,8 +44,12 @@ class SigninComponent extends Component {
                 <View>
                     <TextInput 
                         style={styles.input}
-                        onChangeText={() => {}}
-                        // value={text}
+                        onChangeText={(text) => {
+                          this.setState({
+                            pass: text
+                          })
+                        }}
+                        value={this.state.pass}
                         placeholder="Password" 
                     /> 
                 </View>
@@ -64,7 +82,9 @@ class SigninComponent extends Component {
                    </View>
             </View>
            <View style={{alignItems: "center" , marginTop: 15}}>
-                <TouchableOpacity style={styles.submit}>
+                <TouchableOpacity style={styles.submit} onPress={() => {
+                  this.loginHandler();
+                }}>
                      <Text style={{color: "white" , fontFamily: 'Montserrat-Bold' , fontSize: windowHeight*0.025 }} >
                          Login
                      </Text>

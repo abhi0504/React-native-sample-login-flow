@@ -15,9 +15,9 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import SignupScreen from './src/screens/Signup';
 import SignInScreen from './src/screens/Signin';
 import ChooseType from './src/screens/ChooseType';
-import ConsumerSignin from './src/screens/ConsumerSignin';
-import ConsumerSignup1 from './src/screens/ConsumerSignup1';
-import ConsumerSignup2 from './src/screens/ConsumerSignup2';
+import ConsumerSignin from './src/screens/consumer/ConsumerSignin';
+import ConsumerSignup1 from './src/screens/consumer/ConsumerSignup1';
+import ConsumerSignup2 from './src/screens/consumer/ConsumerSignup2';
 import SellerSignin from './src/screens/seller/SellerSignin';
 import SellerSignUp from './src/screens/seller/SellerSignUp';
 import SellerSignUp2 from './src/screens/seller/sellerSignUp2';

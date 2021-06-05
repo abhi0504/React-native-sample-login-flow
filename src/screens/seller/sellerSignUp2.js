@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component , useState } from 'react';
 import { Text , View , Dimensions , StyleSheet , Image , TextInput , TouchableOpacity} from 'react-native';
 import Navbar from '../../components/Navbar'
 
@@ -7,6 +7,14 @@ const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 function SellerSignUp2 (props) {
+
+    
+    const [add , setAdd] = useState("");
+    const [num , setNum] = useState("");
+    const [desc , setDesc] = useState("");
+    const [time , setTime] = useState("");
+    const [id , setId] = useState("");
+
     return (
         <View style={{flex: 1}}>
             <View>
@@ -26,8 +34,10 @@ function SellerSignUp2 (props) {
                 <View>
                     <TextInput 
                         style={styles.input}
-                        onChangeText={() => {}}
-                        // value={text}
+                        onChangeText={(text) => {
+                            setAdd(text)
+                        }}
+                        value={add}
                         placeholder="Shop Address"
                     />
                 </View>
@@ -37,8 +47,10 @@ function SellerSignUp2 (props) {
                 <View>
                     <TextInput 
                         style={styles.input}
-                        onChangeText={() => {}}
-                        // value={text}
+                        onChangeText={(text) => {
+                            setNum(text)
+                        }}
+                        value={num}
                         placeholder="Contact No." 
                     /> 
                 </View>
@@ -48,8 +60,10 @@ function SellerSignUp2 (props) {
                 <View>
                     <TextInput 
                         style={styles.input}
-                        onChangeText={() => {}}
-                        // value={text}
+                        onChangeText={(text) => {
+                            setDesc(text)
+                        }}
+                        value={desc}
                         placeholder="Description of Shop" 
                     /> 
                 </View>
@@ -59,8 +73,10 @@ function SellerSignUp2 (props) {
                 <View>
                     <TextInput 
                         style={styles.input}
-                        onChangeText={() => {}}
-                        // value={text}
+                        onChangeText={(text) => {
+                            setTime(text)
+                        }}
+                        value={time}
                         placeholder="Shop Timings" 
                     /> 
                 </View>
@@ -70,15 +86,28 @@ function SellerSignUp2 (props) {
                 <View>
                     <TextInput 
                         style={styles.input}
-                        onChangeText={() => {}}
-                        // value={text}
+                        onChangeText={(text) => {
+                            setId(text)
+                        }}
+                        value={id}
                         placeholder="UPI-ID / PAYTM / PHONEPAY / GOOGLEPAY" 
                     /> 
                 </View>
             </View>
            <View style={{alignItems: "center" , marginTop: 15}}>
                 <TouchableOpacity style={styles.submit} onPress={() => {
-                    props.navigation.navigate("SellerSignUp3")
+                    props.navigation.navigate("SellerSignUp3" , {
+                        sname : props.route.params.sname,
+                        oname : props.route.params.oname,
+                        uname : props.route.params.uname,
+                        pass  : props.route.params.pass ,
+                        rpass : props.route.params.rpass,
+                        add   : add ,
+                        num   : num ,
+                        desc  : desc,
+                        time  : time,
+                        id    : id ,
+                    })
                 }}>
                      <Text style={{color: "white" , fontFamily: 'Montserrat-Bold' , fontSize: windowHeight*0.025 }} >
                          Next

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component , useState } from 'react';
 import { Text , View , Dimensions , StyleSheet , Image , TextInput , TouchableOpacity , KeyboardAvoidingView, ScrollView} from 'react-native';
 import Navbar from '../../components/Navbar'
 
@@ -7,6 +7,13 @@ const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 function SellerSignUp (props) {
+
+    const [sname , setSname] = useState("");
+    const [oname , setOname] = useState("");
+    const [uname , setUname] = useState("");
+    const [pass , setPass] = useState("");
+    const [rpass , setrpass] = useState("");
+
     return (
       
         <View style={{flex: 1}}>
@@ -34,8 +41,10 @@ function SellerSignUp (props) {
                 <View>
                     <TextInput 
                         style={styles.input}
-                        onChangeText={() => {}}
-                        // value={text}
+                        onChangeText={(text) => {
+                            setSname(text);
+                        }}
+                        value={sname}
                         placeholder="Shop Name"
                     />
                 </View>
@@ -45,8 +54,10 @@ function SellerSignUp (props) {
                 <View>
                     <TextInput 
                         style={styles.input}
-                        onChangeText={() => {}}
-                        // value={text}
+                        onChangeText={(text) => {
+                            setOname(text);
+                        }}
+                        value={oname}
                         placeholder="Owner Name" 
                     /> 
                 </View>
@@ -56,8 +67,10 @@ function SellerSignUp (props) {
                 <View>
                     <TextInput 
                         style={styles.input}
-                        onChangeText={() => {}}
-                        // value={text}
+                        onChangeText={(text) => {
+                            setUname(text);
+                        }}
+                        value={uname}
                         placeholder="Email/Username" 
                     /> 
                 </View>
@@ -67,8 +80,10 @@ function SellerSignUp (props) {
                 <View>
                     <TextInput 
                         style={styles.input}
-                        onChangeText={() => {}}
-                        // value={text}
+                        onChangeText={(text) => {
+                            setPass(text);
+                        }}
+                        value={pass}
                         placeholder="Password" 
                     /> 
                 </View>
@@ -78,15 +93,22 @@ function SellerSignUp (props) {
                 <View>
                     <TextInput 
                         style={styles.input}
-                        onChangeText={() => {}}
-                        // value={text}
+                        onChangeText={(text) => {
+                            setrpass(text);
+                        }}
+                        value={rpass}
                         placeholder="Repeat Password" 
                     /> 
                 </View>
             </View>
            <View style={{alignItems: "center" , marginTop: 15}}>
                 <TouchableOpacity style={styles.submit} onPress={() => {
-                    props.navigation.navigate("SellerSignUp2")
+                    props.navigation.navigate("SellerSignUp2" , {
+                        sname : sname,
+                        oname : oname,
+                        uname : uname,
+                        pass  : pass ,
+                        rpass : rpass,})
                 }}>
                      <Text style={{color: "white" , fontFamily: 'Montserrat-Bold' , fontSize: windowHeight*0.025 }} >
                          Next
