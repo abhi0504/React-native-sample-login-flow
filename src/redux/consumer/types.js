@@ -1,0 +1,2 @@
+export const SET_LATLNG = 'SET_LATLNG'
+export const UPDATE_LATLNG = 'UPDATE_LANLNG'

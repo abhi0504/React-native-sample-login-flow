@@ -1,5 +1,9 @@
+import jwtDecode from 'jwt-decode';
 import * as React from 'react';
 import { View,Image, Text,AsyncStorage ,Dimensions} from 'react-native';
+import PropTypes from 'prop-types';
+import {connect} from 'react-redux'
+import { setLocation } from '../redux/consumer/actions/latlngactions';
 
 const {height,width} = Dimensions.get('window')
 
@@ -8,6 +12,8 @@ function LoadingScreen(props) {
     const check = async() => {
         var user_token = await AsyncStorage.getItem('user_token')
         if(user_token!==null){
+            var decode = jwtDecode(user_token);
+            props.setLocation(decode.latitude,decode.longitude);
             return props.navigation.reset({
                 index: 0,
                 routes: [{name: 'Consumer'}],
@@ -32,4 +38,16 @@ function LoadingScreen(props) {
     )
 }
 
-export default LoadingScreen;
+LoadingScreen.propTypes = {
+    setLocation: PropTypes.func.isRequired,
+}
+
+const mapStateToProps = (state) => ({
+    latlng:state.latlng
+})
+
+const mapActionsToProps = {
+    setLocation
+}
+
+export default connect(mapStateToProps,mapActionsToProps)(LoadingScreen);

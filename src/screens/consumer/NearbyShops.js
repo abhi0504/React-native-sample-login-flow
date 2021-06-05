@@ -1,7 +1,9 @@
 import * as React from 'react';
 import { View, Text, AsyncStorage } from 'react-native';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
-function NearbyShops() {
+function NearbyShops(props) {
 
     const [l,setL] = React.useState(false);
     const [t,setT] = React.useState('')
@@ -25,8 +27,17 @@ function NearbyShops() {
                 !l &&
                 <Text>{t}</Text>
             }
+            <Text>{props.latlng.latitude}</Text>
         </View>
     )
 }
 
-export default NearbyShops;
+NearbyShops.propTypes = {
+    latlng:PropTypes.object.isRequired
+}
+
+const mapStateToProps = (state) => ({
+    latlng:state.latlng
+})
+
+export default connect(mapStateToProps)(NearbyShops);

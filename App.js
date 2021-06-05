@@ -25,6 +25,8 @@ import SellerSignUp3 from './src/screens/seller/sellerSignUp3';
 import NearbyShops from './src/screens/consumer/NearbyShops';
 import Orders from './src/screens/consumer/Orders';
 import ConsumerProfile from './src/screens/consumer/ConsumerProfile';
+import { Provider } from 'react-redux';
+import store from './src/redux/consumer/store';
 
 
 
@@ -100,7 +102,8 @@ function MainStackScreens() {
 
 function App() {
   return (
-    <NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer>
       <Stack.Navigator screenOptions={{
     headerShown: false
   }}>
@@ -116,6 +119,7 @@ function App() {
         <Stack.Screen name="Consumer" component={ConsumerStackScreens} />
       </Stack.Navigator>
     </NavigationContainer>
+    </Provider>
   );
 }
 

@@ -4,6 +4,10 @@ import { View,ScrollView,AsyncStorage,ImageBackground,TouchableOpacity, Text,But
 import { NavigationContainer, StackActions } from '@react-navigation/native';
 import { Header } from '@react-navigation/stack';
 import { url } from '../../api/api';
+import PropTypes from 'prop-types';
+import {connect} from 'react-redux'
+import { setLocation } from '../../redux/consumer/actions/latlngactions';
+import jwt_decode from "jwt-decode";
 
 const {height,width} = Dimensions.get('window')
 function ConsumerSignin(props) {
@@ -22,7 +26,9 @@ function ConsumerSignin(props) {
         .then(async(res) => {
             console.log(res.data);
             var token = res.data.token;
+            var decodedToken = jwt_decode(token);
             await AsyncStorage.setItem('user_token',token);
+            props.setLocation(decodedToken.latitude,decodedToken.longitude);
             setLoading(false);
             props.navigation.reset({
                 index: 0,
@@ -87,4 +93,16 @@ const styles = StyleSheet.create({
     }
 })
 
-export default ConsumerSignin;
+ConsumerSignin.propTypes = {
+    setLocation: PropTypes.func.isRequired,
+}
+
+const mapStateToProps = (state) => ({
+    latlng:state.latlng
+})
+
+const mapActionsToProps = {
+    setLocation
+}
+
+export default connect(mapStateToProps,mapActionsToProps)(ConsumerSignin);
