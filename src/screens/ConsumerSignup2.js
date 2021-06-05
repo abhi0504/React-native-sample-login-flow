@@ -1,6 +1,6 @@
 import axios from 'axios';
 import * as React from 'react';
-import { View,ScrollView,ImageBackground,TouchableOpacity, Text,Button,FlatList,ActivityIndicator,Platform,Dimensions,Image,TextInput,StyleSheet,KeyboardAvoidingView } from 'react-native';
+import { View,ScrollView,AsyncStorage,ImageBackground,TouchableOpacity, Text,Button,FlatList,ActivityIndicator,Platform,Dimensions,Image,TextInput,StyleSheet,KeyboardAvoidingView } from 'react-native';
 import StyleButton from '../components/Button';
 import { Header } from '@react-navigation/stack';
 import GetLocation from 'react-native-get-location'
@@ -17,6 +17,7 @@ function ConsumerSignup2(props) {
     const [longitude,setLongitude] = React.useState(null);
     const [cll,setCll] = React.useState(false);
     const [aname,setAname] = React.useState('')
+    const [loading,setLoading] = React.useState(false);
 
     const completeSignup = async() => {
         const email = props.route.params.email
@@ -24,14 +25,14 @@ function ConsumerSignup2(props) {
         const name = props.route.params.name
         const contact = props.route.params.contact
         setCll(true);
-        GetLocation.getCurrentPosition({
+        await GetLocation.getCurrentPosition({
             enableHighAccuracy: true,
             timeout: 15000,
         })
-        .then(location => {
+        .then(async(location) => {
             console.log(location);
-            setLongitude(location.longitude)
-            setLatitude(location.latitude)
+            await setLongitude(location.longitude)
+            await setLatitude(location.latitude)
             var address = flat + ' , ' + area + ' , ' + landmark + ' , ' + town;
             var consumer = {
                 consumer_email:email,
@@ -48,35 +49,11 @@ function ConsumerSignup2(props) {
                 'Content-Type': 'application/json'
                 }
               })
-            .then(res => {
-                console.log(res);
+            .then(async(res) => {
+                console.log(res.data);
                 var token = res.data.token;
-                var address = flat + ' , ' + area + ' , ' + landmark + ' , ' + town;
-                var newAddress = {
-                    address:address,
-                    state:town,
-                    pincode:town,
-                    latitude:latitude,
-                    longitude:longitude,
-                    name:aname
-                }
-                console.log(newAddress)
-                axios.post(`${url}/consumer/address`,newAddress, {
-                    headers: {
-                    'Content-Type': 'application/json',
-                    "Authorization": `Bearer ${token}`
-                    }
-                  }).then(res => {
-                      console.log(res.data)
-                      axios.get(`${url}/consumer/address/update/${res.data.addressId}`,{
-                          headers: {
-                            "Authorization": `Bearer ${token}`
-                        }
-                      })
-                      .then(res => {
-                          console.log(res.data);
-                      })
-                  })
+                await AsyncStorage.removeItem('user_token');
+                await AsyncStorage.setItem('user_token',token);
             })
             .catch(err => {
                 console.log(err);
@@ -89,6 +66,38 @@ function ConsumerSignup2(props) {
             console.warn(code, message);
             setCll(false);
         })
+        var token = await AsyncStorage.getItem('user_token')
+        var address = flat + ' , ' + area + ' , ' + landmark + ' , ' + town;
+        var newAddress = {
+            address:address,
+            state:town,
+            pincode:town,
+            latitude:latitude,
+            longitude:longitude,
+            name:aname
+        }
+        console.log(newAddress)
+        axios.post(`${url}/consumer/address`,newAddress, {
+            headers: {
+            'Content-Type': 'application/json',
+            "Authorization": `Bearer ${token}`
+            }
+            }).then(res => {
+                console.log(res.data)
+                axios.get(`${url}/consumer/address/update/${res.data.addressId}`,{
+                    headers: {
+                        "Authorization": `Bearer ${token}`
+                    }
+                })
+                .then(async(res) => {
+                    console.log(res.data);
+                        setCll(false);
+                        props.navigation.reset({
+                            index: 0,
+                            routes: [{name: 'Consumer'}],
+                        });
+                })
+            })
     }
 
     const signup = () => {

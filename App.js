@@ -22,6 +22,9 @@ import SellerSignin from './src/screens/seller/SellerSignin';
 import SellerSignUp from './src/screens/seller/SellerSignUp';
 import SellerSignUp2 from './src/screens/seller/sellerSignUp2';
 import SellerSignUp3 from './src/screens/seller/sellerSignUp3';
+import NearbyShops from './src/screens/consumer/NearbyShops';
+import Orders from './src/screens/consumer/Orders';
+import ConsumerProfile from './src/screens/consumer/ConsumerProfile';
 
 
 
@@ -32,12 +35,40 @@ const MainStack = createBottomTabNavigator();
 
 const Drawer = createDrawerNavigator();
 
+const ConsumerStack = createBottomTabNavigator();
+
 function Personal() {
   return (
     <Drawer.Navigator>
       <Drawer.Screen name="Main" component={MainStackScreens} />
       <Drawer.Screen name="Profile" component={Profile} />
     </Drawer.Navigator>
+  )
+}
+
+function ConsumerStackScreens() {
+  return(
+    <ConsumerStack.Navigator>
+      <ConsumerStack.Screen options={{
+          tabBarLabel: 'Shops',
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="home" color={color} size={size} />
+          ),
+        }} name="shops" component={NearbyShops} />
+      <ConsumerStack.Screen
+      options={{
+        tabBarLabel: 'Orders',
+        tabBarIcon: ({ color, size }) => (
+          <MaterialCommunityIcons name="bank" color={color} size={size} />
+        ),
+      }} name="Orders" component={Orders} />
+      <ConsumerStack.Screen options={{
+          tabBarLabel: 'Profile',
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="shopping-music" color={color} size={size} />
+          ),
+        }} name="Profile" component={ConsumerProfile} />
+      </ConsumerStack.Navigator>
   )
 }
 
@@ -82,7 +113,7 @@ function App() {
         <Stack.Screen name="SellerSignUp" component={SellerSignUp} />
         <Stack.Screen name="SellerSignUp2" component={SellerSignUp2} />
         <Stack.Screen name="SellerSignUp3" component={SellerSignUp3} />
-
+        <Stack.Screen name="Consumer" component={ConsumerStackScreens} />
       </Stack.Navigator>
     </NavigationContainer>
   );
