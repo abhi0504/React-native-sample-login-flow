@@ -1,11 +1,10 @@
 import axios from 'axios';
 import * as React from 'react';
 import { View,ScrollView,ImageBackground,TouchableOpacity, Text,Button,FlatList,ActivityIndicator,Platform,Dimensions,Image,TextInput,StyleSheet,KeyboardAvoidingView } from 'react-native';
-import StyleButton from '../components/Button';
+import StyleButton from '../../components/Button';
 import { Header } from '@react-navigation/stack';
 
 const {height,width} = Dimensions.get('window')
-//<Image source={require('../images/bg1.jpg')} resizeMode="cover" style={{height:height/1.75,width:width}} />
 function ConsumerSignup1(props) {
     const [name,setName] = React.useState('');
     const [contact,setContact] = React.useState('');
@@ -16,7 +15,7 @@ function ConsumerSignup1(props) {
     return (
         <KeyboardAvoidingView keyboardVerticalOffset={-500} behavior="padding" enabled style={{flex:1,backgroundColor:'white'}}>
             <ScrollView>
-            <ImageBackground source={require('../images/bg1.jpg')} resizeMode="cover" style={{height:height/1.75,width:width,justifyContent:'center'}} >
+            <ImageBackground source={require('../../images/bg1.jpg')} resizeMode="cover" style={{height:height/1.75,width:width,justifyContent:'center'}} >
                 <Text style={{color:'white',fontSize:29,fontWeight:'600',alignSelf:'center'}}>Choose Your Profilepic</Text>
                 </ImageBackground>
                 <View style={{flexDirection:'row'}}>

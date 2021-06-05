@@ -7,7 +7,6 @@ import { Header } from '@react-navigation/stack';
 import { url } from '../api/api';
 
 const {height,width} = Dimensions.get('window')
-//<Image source={require('../images/bg1.jpg')} resizeMode="cover" style={{height:height/1.75,width:width}} />
 function ConsumerSignin(props) {
     const [email,setEmail] = React.useState('');
     const [password,setPassword] = React.useState('');
@@ -40,7 +39,7 @@ function ConsumerSignin(props) {
     return (
         <KeyboardAvoidingView keyboardVerticalOffset={-500} behavior="padding" enabled style={{flex:1,backgroundColor:'white'}}>
             <ScrollView>
-            <ImageBackground source={require('../images/bg1.jpg')} resizeMode="cover" style={{height:height/1.75,width:width,justifyContent:'center'}} >
+            <ImageBackground source={require('../../images/bg1.jpg')} resizeMode="cover" style={{height:height/1.75,width:width,justifyContent:'center'}} >
                 <Text style={{color:'white',fontSize:29,fontWeight:'600',padding:15,paddingBottom:0}}>Support Local</Text>
                 <Text style={{color:'white',fontSize:29,fontWeight:'600',paddingLeft:15}}>Buisnesses</Text>
                 </ImageBackground>
