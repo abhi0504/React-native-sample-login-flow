@@ -1,10 +1,9 @@
 import axios from 'axios';
 import * as React from 'react';
 import { View,ScrollView,AsyncStorage,ImageBackground,TouchableOpacity, Text,Button,FlatList,ActivityIndicator,Platform,Dimensions,Image,TextInput,StyleSheet,KeyboardAvoidingView } from 'react-native';
-import StyleButton from '../components/Button';
 import { NavigationContainer, StackActions } from '@react-navigation/native';
 import { Header } from '@react-navigation/stack';
-import { url } from '../api/api';
+import { url } from '../../api/api';
 
 const {height,width} = Dimensions.get('window')
 function ConsumerSignin(props) {

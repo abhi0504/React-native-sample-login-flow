@@ -1,9 +1,18 @@
 import * as React from 'react';
-import { View, Text,AsyncStorage } from 'react-native';
+import { View,Image, Text,AsyncStorage ,Dimensions} from 'react-native';
+
+const {height,width} = Dimensions.get('window')
 
 function LoadingScreen(props) {
 
     const check = async() => {
+        var user_token = await AsyncStorage.getItem('user_token')
+        if(user_token!==null){
+            return props.navigation.reset({
+                index: 0,
+                routes: [{name: 'Consumer'}],
+            });
+        }
         props.navigation.replace("ChooseType")
     }
 
@@ -16,8 +25,9 @@ function LoadingScreen(props) {
     },[])
 
     return (
-        <View style={{flex:1,justifyContent:'center',alignItems:'center',backgroundColor:'white'}}>
-            <Text style={{fontSize:29,color:'#6495ed'}}>Online For Local</Text>
+        <View style={{alignItems:'center'}}>
+            <Image source={require('../images/si.gif')} style={{height:width,width:width,resizeMode:'contain'}}/>
+            <Image source={require('../images/giphy.gif')} style={{height:width+25,width:width}}/>
         </View>
     )
 }

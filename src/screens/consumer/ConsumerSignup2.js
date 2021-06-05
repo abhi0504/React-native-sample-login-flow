@@ -1,7 +1,6 @@
 import axios from 'axios';
 import * as React from 'react';
 import { View,ScrollView,AsyncStorage,ImageBackground,TouchableOpacity, Text,Button,FlatList,ActivityIndicator,Platform,Dimensions,Image,TextInput,StyleSheet,KeyboardAvoidingView } from 'react-native';
-import StyleButton from '../components/Button';
 import { Header } from '@react-navigation/stack';
 import GetLocation from 'react-native-get-location'
 import {url} from '../../api/api'
@@ -18,54 +17,59 @@ function ConsumerSignup2(props) {
     const [aname,setAname] = React.useState('')
     const [loading,setLoading] = React.useState(false);
 
-    const completeSignup = async() => {
+    const signup = async() => {
         const email = props.route.params.email
         const password = props.route.params.password
         const name = props.route.params.name
         const contact = props.route.params.contact
         setCll(true);
-        await GetLocation.getCurrentPosition({
+        GetLocation.getCurrentPosition({
             enableHighAccuracy: true,
             timeout: 15000,
-        })
-        .then(async(location) => {
+        }).then(async(location) => {
             console.log(location);
-            await setLongitude(location.longitude)
-            await setLatitude(location.latitude)
-            var address = flat + ' , ' + area + ' , ' + landmark + ' , ' + town;
-            var consumer = {
-                consumer_email:email,
-                consumer_password:password,
-                consumer_contact:contact,
-                consumer_address:address,
-                consumer_name:name,
-                consumer_image:'',
-            }
-            console.log(consumer)
-            console.log(url);
-            axios.post(`${url}/consumer/signup`,consumer, {
-                headers: {
-                'Content-Type': 'application/json'
-                }
-              })
-            .then(async(res) => {
-                console.log(res.data);
-                var token = res.data.token;
-                await AsyncStorage.removeItem('user_token');
-                await AsyncStorage.setItem('user_token',token);
-            })
-            .catch(err => {
-                console.log(err);
-            })
-            console.log(address);
-            setCll(false)
+            setLongitude(location.longitude)
+            setLatitude(location.latitude)
+            await doSignup(location.latitude,location.longitude)
+            addAddress(location.latitude,location.longitude)
         })
         .catch(error => {
             const { code, message } = error;
             console.warn(code, message);
             setCll(false);
         })
-        var token = await AsyncStorage.getItem('user_token')
+    }
+
+    const doSignup = async(longitude,latitude) => {
+        const email = props.route.params.email
+        const password = props.route.params.password
+        const name = props.route.params.name
+        const contact = props.route.params.contact
+        console.log(longitude,latitude)
+        console.log(latitude,longitude)
+        var address = flat + ' , ' + area + ' , ' + landmark + ' , ' + town;
+        var consumer = {
+            consumer_email:email,
+            consumer_password:password,
+            consumer_contact:contact,
+            consumer_address:address,
+            consumer_name:name,
+            consumer_image:'',
+        }
+        console.log(consumer)
+        console.log(url);
+        await axios.post(`${url}/consumer/signup`,consumer, {
+            headers: {
+            'Content-Type': 'application/json'
+            }
+        }).then(async(res) => {
+            console.log(res.data);
+            var token = res.data.token;
+            await AsyncStorage.setItem('user_token', token)
+        })
+    }
+
+    const addAddress = async(latitude,longitude) => {
         var address = flat + ' , ' + area + ' , ' + landmark + ' , ' + town;
         var newAddress = {
             address:address,
@@ -76,31 +80,34 @@ function ConsumerSignup2(props) {
             name:aname
         }
         console.log(newAddress)
+        var token = await AsyncStorage.getItem('user_token');
+        console.log(token);
         axios.post(`${url}/consumer/address`,newAddress, {
-            headers: {
+        headers: {
             'Content-Type': 'application/json',
             "Authorization": `Bearer ${token}`
-            }
-            }).then(res => {
-                console.log(res.data)
-                axios.get(`${url}/consumer/address/update/${res.data.addressId}`,{
-                    headers: {
-                        "Authorization": `Bearer ${token}`
-                    }
-                })
-                .then(async(res) => {
-                    console.log(res.data);
-                        setCll(false);
-                        props.navigation.reset({
-                            index: 0,
-                            routes: [{name: 'Consumer'}],
-                        });
-                })
-            })
+        }
+        }).then(response => {
+            console.log(response.data);
+            updateAddress(response.data.addressId)
+        })
     }
 
-    const signup = () => {
-
+    const updateAddress = async(addressId) => {
+        var token = await AsyncStorage.getItem('user_token');
+        console.log(token);
+        axios.get(`${url}/consumer/address/update/${addressId}`,{
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        }).then(response => {
+            console.log(response.data);
+            setCll(false);
+            props.navigation.reset({
+                index: 0,
+                routes: [{name: 'Consumer'}],
+            });
+        })
     }
 
     return (
@@ -125,7 +132,7 @@ function ConsumerSignup2(props) {
                     <TextInput style={styles.input} value={aname} placeholder="Address Name" onChangeText={(val) => setAname(val)} />
                 </View>
                 <View>
-                    <TouchableOpacity onPress={completeSignup} style={{width:width-75,alignItems:'center',marginTop:25,borderRadius:9,height:50,backgroundColor:'#ff4500',alignSelf:'center',justifyContent:'center'}}>
+                    <TouchableOpacity onPress={signup} style={{width:width-75,alignItems:'center',marginTop:25,borderRadius:9,height:50,backgroundColor:'#ff4500',alignSelf:'center',justifyContent:'center'}}>
                         <View>
                         {
                             !cll?

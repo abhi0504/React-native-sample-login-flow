@@ -1,7 +1,6 @@
 import axios from 'axios';
 import * as React from 'react';
 import { View,ScrollView,ImageBackground,TouchableOpacity, Text,Button,FlatList,ActivityIndicator,Platform,Dimensions,Image,TextInput,StyleSheet,KeyboardAvoidingView } from 'react-native';
-import StyleButton from '../../components/Button';
 import { Header } from '@react-navigation/stack';
 
 const {height,width} = Dimensions.get('window')
