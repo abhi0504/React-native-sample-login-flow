@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
-import { Text , View , Dimensions , StyleSheet , Image, TextInput, TouchableOpacity} from 'react-native';
+import { Text , View , Dimensions , StyleSheet , Image, TextInput, TouchableOpacity , AsyncStorage} from 'react-native';
 import CheckBox from 'react-native-check-box'
+
+import axios from 'axios';
+import {url} from '../api/api'
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -8,8 +11,30 @@ const windowHeight = Dimensions.get('window').height;
 class SigninComponent extends Component {
 
    loginHandler = () => {
-    console.log(this.state.email);
-    console.log(this.state.pass);
+    // console.log(this.state.email);
+    // console.log(this.state.pass);
+
+    var seller = {
+      shop_email:this.state.email,
+      shop_password:this.state.pass
+  }
+
+  console.log(seller);
+
+  axios.post(`${url}/shop/login`,seller)
+    .then(async(res) => {
+        console.log(res.data);
+        var token = res.data.token;
+        await AsyncStorage.setItem('shop_token',token);
+        this.props.signIn.reset({
+          index: 0,
+          routes: [{name: 'Seller'}],
+      });
+    })
+    .catch(err => {
+        console.log(err);
+    })
+
   }
 
     state = {
@@ -76,7 +101,7 @@ class SigninComponent extends Component {
                      </View>
              </View>
              <View style={{alignItems: "flex-end" , marginRight: windowWidth*0.1 }}>
-                    <TouchableOpacity onPress={() => {this.props.signUp.navigate("SellerSignUp")}}>
+                    <TouchableOpacity onPress={() => {this.props.signIn.navigate("SellerSignUp")}}>
                      <Text style={{color: "grey" , fontFamily: 'Montserrat-Light' }}>Sign Up</Text>
                     </TouchableOpacity>
                    </View>

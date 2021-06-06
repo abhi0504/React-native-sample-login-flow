@@ -23,6 +23,7 @@ import SellerSignUp from './src/screens/seller/SellerSignUp';
 import SellerSignUp2 from './src/screens/seller/sellerSignUp2';
 import SellerSignUp3 from './src/screens/seller/sellerSignUp3';
 import NearbyShops from './src/screens/consumer/NearbyShops';
+import SellerScreen from './src/screens/seller/SellerScreen';
 import Orders from './src/screens/consumer/Orders';
 import ConsumerProfile from './src/screens/consumer/ConsumerProfile';
 import { Provider } from 'react-redux';
@@ -40,6 +41,8 @@ const Drawer = createDrawerNavigator();
 
 const ConsumerStack = createBottomTabNavigator();
 
+const SellerStack = createBottomTabNavigator();
+
 function Personal() {
   return (
     <Drawer.Navigator>
@@ -48,6 +51,55 @@ function Personal() {
     </Drawer.Navigator>
   )
 }
+
+function SellerStackScreens() {
+  return(
+    <SellerStack.Navigator tabBarOptions={{
+      showLabel:false,
+      style:{
+        height:57,
+        backgroundColor:'white',
+        borderTopLeftRadius:19,
+        borderTopRightRadius:19
+      },
+      activeTintColor:'#0ae38c'
+    }}>
+      <SellerStack.Screen options={{
+          tabBarLabel: 'Shops',
+          tabBarIcon: ({ color, size }) => (
+            <Icon2 name="shopping-store" color={color} size={25} />
+          ),
+        }} name="shops" component={SellerScreen} />
+         <SellerStack.Screen options={{
+          tabBarLabel: 'Shops',
+          tabBarIcon: ({ color, size }) => (
+            <Icon2 name="search" color={color} size={25} />
+          ),
+        }} name="search" component={SellerScreen} />
+        <SellerStack.Screen options={{
+          tabBarLabel: 'Shops',
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="cart-outline" color={color} size={31} />
+          ),
+        }} name="cart" component={SellerScreen} />
+      <SellerStack.Screen
+      options={{
+        tabBarLabel: 'Orders',
+        tabBarIcon: ({ color, size }) => (
+          <Icon3 name="bag" color={color} size={size} />
+        ),
+      }} name="Orders" component={Orders} />
+      <SellerStack.Screen options={{
+          tabBarLabel: 'Profile',
+          tabBarIcon: ({ color, size }) => (
+            <Icon2 name="person" color={color} size={size} />
+          ),
+        }} name="Profile" component={ConsumerProfile} />
+      </SellerStack.Navigator>
+  )
+}
+
+
 
 function ConsumerStackScreens() {
   return(
@@ -139,6 +191,7 @@ function App() {
         <Stack.Screen name="SellerSignUp2" component={SellerSignUp2} />
         <Stack.Screen name="SellerSignUp3" component={SellerSignUp3} />
         <Stack.Screen name="Consumer" component={ConsumerStackScreens} />
+        <Stack.Screen name="Seller" component={SellerStackScreens} />
       </Stack.Navigator>
     </NavigationContainer>
     </Provider>

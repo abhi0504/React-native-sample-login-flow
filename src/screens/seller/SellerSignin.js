@@ -4,10 +4,14 @@ import Navbar from '../../components/Navbar'
 import SigninComponent from '../../components/SigninComponent'
 
 
+
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 function SellerSignin (props) {
+
+
+
     return (
         <View style={{flex: 1}}>
           {/* <Navbar /> */}
@@ -20,7 +24,7 @@ function SellerSignin (props) {
               }}
               source={require('../../../assets/loginImages/AngleTopLeft.png')}
             />
-            <SigninComponent signUp={props.navigation}/>
+            <SigninComponent signIn={props.navigation}/>
             
             
             </View>

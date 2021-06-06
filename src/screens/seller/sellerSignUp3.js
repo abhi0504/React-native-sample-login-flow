@@ -1,7 +1,9 @@
 import React, { Component , useState } from 'react';
-import { Text , View , Dimensions , StyleSheet , Image , TextInput , TouchableOpacity} from 'react-native';
+import { Text , View , Dimensions , StyleSheet , Image , TextInput , TouchableOpacity ,ActivityIndicator , AsyncStorage} from 'react-native';
 import Navbar from '../../components/Navbar'
 import GetLocation from 'react-native-get-location'
+import axios from 'axios';
+import {url} from '../../api/api'
 
 
 const windowWidth = Dimensions.get('window').width;
@@ -10,8 +12,9 @@ const windowHeight = Dimensions.get('window').height;
 function SellerSignUp (props) {
   
   const[location , setLocation] = useState(null)
+  const[loader , setLoader] = useState(false)
   
-  const submitHandler = () => {
+  const submitHandler = async () => {
     let sname = props.route.params.sname
     let oname = props.route.params.oname
     let uname = props.route.params.uname
@@ -24,18 +27,36 @@ function SellerSignUp (props) {
     let id    = props.route.params.id 
     let longi = location.longitude
     let lati  = location.latitude
-    // console.log(sname);
-    // console.log(oname);
-    // console.log(uname);
-    // console.log(pass );
-    // console.log(rpass);
-    // console.log(add  );
-    // console.log(num  );
-    // console.log(desc );
-    // console.log(time );
-    // console.log(id   );
-    // console.log(longi);
-    // console.log(lati );
+
+    //SHOpe image and description remaining here
+
+    let seller = {
+     shop_name      : sname ,
+     shop_owner     : oname ,
+     shop_contact   : num , 
+     shop_location  : add , 
+     shop_longitude : longi,
+     shop_latitude  : lati,
+     shop_timing   : time,
+     shop_upiId     : id,
+     shop_email     : uname ,
+     shop_password  : pass
+    }
+
+
+    await axios.post(`${url}/shop/signup`,seller, {
+      headers: {
+      'Content-Type': 'application/json'
+      }
+  }).then(async(res) => {
+      console.log(res.data);
+      var token = res.data.token;
+      await AsyncStorage.setItem('shop_token', token)
+      props.navigation.reset({
+        index: 0,
+        routes: [{name: 'Seller'}],
+    });
+  })
   }
 
     return (
@@ -50,24 +71,26 @@ function SellerSignUp (props) {
               source={require('../../../assets/loginImages/AngleTopLeft.png')}
             />
             </View>
-            <View>
+            <Text style={[styles.labels , {marginLeft: windowWidth*0.1}]}>Provide Location of your Shop/Buisnesses</Text>
 
-                {/* Add crousal for image and Latitude and Longitude use location */}
-
-                <View style={{marginTop: 20}}>
-                <Text style={[styles.labels , {marginLeft: windowWidth*0.1}]}>Provide Location of your Shop/Buisnesses</Text>
+                {loader ? <View>
+                  <ActivityIndicator size="large" color="#00ff00" />
+                </View> :  <View style={{marginTop: 20}}>
                 {location ? 
                 <View style={{marginTop: 20}}>
-                  <Text style={[styles.labels , {marginLeft: windowWidth*0.1}]}>Latitude    : {location.latitude}</Text>
-                  <Text style={[styles.labels , {marginLeft: windowWidth*0.1}]}>Longitude : {location.longitude}</Text>
+                  <Text style={[styles.labels , {marginLeft: windowWidth*0.1}]}>Latitude    :   {location.latitude}</Text>
+                  <Text style={[styles.labels , {marginLeft: windowWidth*0.1}]}>Longitude :   {location.longitude}</Text>
                 </View> : <View>
                     <TouchableOpacity style={{alignItems: "center"}} onPress={() => {
+                      setLoader(true);
+                      
                       GetLocation.getCurrentPosition({
                         enableHighAccuracy: true,
                         timeout: 15000,
                     }).then((res) => {
                       console.log(location);
                       setLocation(res);
+                      setLoader(false);
                     })
                     }}>
                       <View style={{height: windowHeight*0.07 , width: windowWidth*0.5 ,alignItems: "center" , justifyContent: "center", backgroundColor: "#0ae38c" , marginTop: 20 , borderRadius: 20}}>
@@ -77,9 +100,14 @@ function SellerSignUp (props) {
                 </View> }
                 
             </View>
-        
+        }
+            <View>
+
+                {/* Add crousal for image and Latitude and Longitude use location */}
+
+               
            <View style={{alignItems: "center" , marginTop: 25}}>
-                <TouchableOpacity style={styles.submit} onPress={() => {
+                <TouchableOpacity style={styles.submit} onPress={() => {  
                     submitHandler()
                 }}>
                      <Text style={{color: "white" , fontFamily: 'Montserrat-Bold' , fontSize: windowHeight*0.025 }} >
