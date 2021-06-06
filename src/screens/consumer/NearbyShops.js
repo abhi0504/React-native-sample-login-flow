@@ -1,7 +1,10 @@
 import * as React from 'react';
-import { View, Text, AsyncStorage } from 'react-native';
+import { View, Text, AsyncStorage,Dimensions } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import Header from './ConsumerComponents/Header';
+
+const {height,width} = Dimensions.get('window')
 
 function NearbyShops(props) {
 
@@ -21,7 +24,8 @@ function NearbyShops(props) {
     },[])
 
     return (
-        <View>
+        <View style={{flex:1}}>
+            <Header backgroundColor='#ff6347' header='Nearby Shops' height={55} width={width} />
             <Text>HI</Text>
             {
                 !l &&

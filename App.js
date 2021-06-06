@@ -26,8 +26,9 @@ import NearbyShops from './src/screens/consumer/NearbyShops';
 import Orders from './src/screens/consumer/Orders';
 import ConsumerProfile from './src/screens/consumer/ConsumerProfile';
 import { Provider } from 'react-redux';
-import store from './src/redux/consumer/store';
-
+import store from './src/redux/store';
+import Icon2 from 'react-native-vector-icons/Fontisto'
+import Icon3 from 'react-native-vector-icons/SimpleLineIcons'
 
 
 
@@ -50,24 +51,45 @@ function Personal() {
 
 function ConsumerStackScreens() {
   return(
-    <ConsumerStack.Navigator>
+    <ConsumerStack.Navigator tabBarOptions={{
+      showLabel:false,
+      style:{
+        height:57,
+        backgroundColor:'white',
+        borderTopLeftRadius:19,
+        borderTopRightRadius:19
+      },
+      activeTintColor:'#ff6347'
+    }}>
       <ConsumerStack.Screen options={{
           tabBarLabel: 'Shops',
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="home" color={color} size={size} />
+            <Icon2 name="shopping-store" color={color} size={25} />
           ),
         }} name="shops" component={NearbyShops} />
+         <ConsumerStack.Screen options={{
+          tabBarLabel: 'Shops',
+          tabBarIcon: ({ color, size }) => (
+            <Icon2 name="search" color={color} size={25} />
+          ),
+        }} name="search" component={NearbyShops} />
+        <ConsumerStack.Screen options={{
+          tabBarLabel: 'Shops',
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="cart-outline" color={color} size={31} />
+          ),
+        }} name="cart" component={NearbyShops} />
       <ConsumerStack.Screen
       options={{
         tabBarLabel: 'Orders',
         tabBarIcon: ({ color, size }) => (
-          <MaterialCommunityIcons name="bank" color={color} size={size} />
+          <Icon3 name="bag" color={color} size={size} />
         ),
       }} name="Orders" component={Orders} />
       <ConsumerStack.Screen options={{
           tabBarLabel: 'Profile',
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="shopping-music" color={color} size={size} />
+            <Icon2 name="person" color={color} size={size} />
           ),
         }} name="Profile" component={ConsumerProfile} />
       </ConsumerStack.Navigator>

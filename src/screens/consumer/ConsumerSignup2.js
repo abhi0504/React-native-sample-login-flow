@@ -4,6 +4,9 @@ import { View,ScrollView,AsyncStorage,ImageBackground,TouchableOpacity, Text,But
 import { Header } from '@react-navigation/stack';
 import GetLocation from 'react-native-get-location'
 import {url} from '../../api/api'
+import PropTypes from 'prop-types';
+import {connect} from 'react-redux'
+import { setLocation } from '../../redux/consumer/actions/latlngactions';
 
 const {height,width} = Dimensions.get('window')
 function ConsumerSignup2(props) {
@@ -22,6 +25,7 @@ function ConsumerSignup2(props) {
         const password = props.route.params.password
         const name = props.route.params.name
         const contact = props.route.params.contact
+        const imgUrl = props.route.params.imgUrl
         setCll(true);
         GetLocation.getCurrentPosition({
             enableHighAccuracy: true,
@@ -31,6 +35,7 @@ function ConsumerSignup2(props) {
             setLongitude(location.longitude)
             setLatitude(location.latitude)
             await doSignup(location.latitude,location.longitude)
+            await props.setLocation(location.latitude,location.longitude)
             addAddress(location.latitude,location.longitude)
         })
         .catch(error => {
@@ -45,6 +50,7 @@ function ConsumerSignup2(props) {
         const password = props.route.params.password
         const name = props.route.params.name
         const contact = props.route.params.contact
+        const imgUrl = props.route.params.imgUrl
         console.log(longitude,latitude)
         console.log(latitude,longitude)
         var address = flat + ' , ' + area + ' , ' + landmark + ' , ' + town;
@@ -54,7 +60,7 @@ function ConsumerSignup2(props) {
             consumer_contact:contact,
             consumer_address:address,
             consumer_name:name,
-            consumer_image:'',
+            consumer_image:imgUrl,
         }
         console.log(consumer)
         console.log(url);
@@ -162,4 +168,16 @@ const styles = StyleSheet.create({
     }
 })
 
-export default ConsumerSignup2;
+ConsumerSignup2.propTypes = {
+    setLocation: PropTypes.func.isRequired,
+}
+
+const mapStateToProps = (state) => ({
+    latlng:state.latlng
+})
+
+const mapActionsToProps = {
+    setLocation
+}
+
+export default connect(mapStateToProps,mapActionsToProps)(ConsumerSignup2);

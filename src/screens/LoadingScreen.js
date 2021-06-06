@@ -11,6 +11,7 @@ function LoadingScreen(props) {
 
     const check = async() => {
         var user_token = await AsyncStorage.getItem('user_token')
+        /*
         if(user_token!==null){
             var decode = jwtDecode(user_token);
             props.setLocation(decode.latitude,decode.longitude);
@@ -19,6 +20,7 @@ function LoadingScreen(props) {
                 routes: [{name: 'Consumer'}],
             });
         }
+        */
         props.navigation.replace("ChooseType")
     }
 
