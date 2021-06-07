@@ -6,7 +6,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import AccountScreen from './src/screens/Accounts';
+// import AccountScreen from './src/screens/Accounts';
 import Products from './src/screens/Products';
 import LoadingScreen from './src/screens/LoadingScreen'
 import Profile from './src/screens/Profile';
@@ -22,8 +22,10 @@ import SellerSignin from './src/screens/seller/SellerSignin';
 import SellerSignUp from './src/screens/seller/SellerSignUp';
 import SellerSignUp2 from './src/screens/seller/sellerSignUp2';
 import SellerSignUp3 from './src/screens/seller/sellerSignUp3';
+import AddProducts from './src/screens/seller/AddProducts';
 import NearbyShops from './src/screens/consumer/NearbyShops';
 import SellerScreen from './src/screens/seller/SellerScreen';
+import sellerOverview from './src/screens/seller/sellerOverview';
 import Orders from './src/screens/consumer/Orders';
 import ConsumerProfile from './src/screens/consumer/ConsumerProfile';
 import { Provider } from 'react-redux';
@@ -83,7 +85,7 @@ function SellerStackScreens() {
           tabBarIcon: ({ color, size }) => (
             <Icon2 name="shopping-store" color={color} size={25} />
           ),
-        }} name="shops" component={SellerScreen} />
+        }} name="shops" component={sellerOverview} />
          <SellerStack.Screen options={{
           tabBarLabel: 'Shops',
           tabBarIcon: ({ color, size }) => (
@@ -171,13 +173,6 @@ function MainStackScreens() {
             <MaterialCommunityIcons name="home" color={color} size={size} />
           ),
         }} name="Home" component={HomeScreen} />
-      <MainStack.Screen
-      options={{
-        tabBarLabel: 'Accounts',
-        tabBarIcon: ({ color, size }) => (
-          <MaterialCommunityIcons name="bank" color={color} size={size} />
-        ),
-      }} name="Accounts" component={AccountScreen} />
       <MainStack.Screen options={{
           tabBarLabel: 'Products',
           tabBarIcon: ({ color, size }) => (
@@ -206,6 +201,7 @@ function App() {
         <Stack.Screen name="SellerSignUp3" component={SellerSignUp3} />
         <Stack.Screen name="Consumer" component={ConsumerStackScreens} />
         <Stack.Screen name="Seller" component={SellerStackScreens} />
+        <Stack.Screen name="AddProducts" component={AddProducts} />
       </Stack.Navigator>
     </NavigationContainer>
     </Provider>
