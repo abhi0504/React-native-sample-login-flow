@@ -30,6 +30,7 @@ import { Provider } from 'react-redux';
 import store from './src/redux/store';
 import Icon2 from 'react-native-vector-icons/Fontisto'
 import Icon3 from 'react-native-vector-icons/SimpleLineIcons'
+import ShopProducts from './src/screens/consumer/ShopProducts';
 
 
 
@@ -42,6 +43,19 @@ const Drawer = createDrawerNavigator();
 const ConsumerStack = createBottomTabNavigator();
 
 const SellerStack = createBottomTabNavigator();
+
+const NearbyShopStack = createStackNavigator();
+
+function NearbyShopss() {
+  return (
+    <NearbyShopStack.Navigator screenOptions={{
+      headerShown: false
+    }}>
+      <NearbyShopStack.Screen name="allShops" component={NearbyShops} />
+      <NearbyShopStack.Screen name="ShopProducts" component={ShopProducts} />
+    </NearbyShopStack.Navigator>
+  )
+}
 
 function Personal() {
   return (
@@ -118,7 +132,7 @@ function ConsumerStackScreens() {
           tabBarIcon: ({ color, size }) => (
             <Icon2 name="shopping-store" color={color} size={25} />
           ),
-        }} name="shops" component={NearbyShops} />
+        }} name="shops" component={NearbyShopss} />
          <ConsumerStack.Screen options={{
           tabBarLabel: 'Shops',
           tabBarIcon: ({ color, size }) => (

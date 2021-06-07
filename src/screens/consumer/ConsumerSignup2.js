@@ -34,6 +34,8 @@ function ConsumerSignup2(props) {
             console.log(location);
             setLongitude(location.longitude)
             setLatitude(location.latitude)
+            await AsyncStorage.setItem('latitude',location.latitude.toString())
+            await AsyncStorage.setItem('longitude',location.longitude.toString())
             await doSignup(location.latitude,location.longitude)
             await props.setLocation(location.latitude,location.longitude)
             addAddress(location.latitude,location.longitude)
