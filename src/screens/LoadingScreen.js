@@ -21,6 +21,18 @@ function LoadingScreen(props) {
             });
         }
         */
+
+        //for shop add redux settlement
+
+        // if(shop_token!==null){
+        //     var decode = jwtDecode(user_token);
+        //     return props.navigation.reset({
+        //         index: 0,
+        //         routes: [{name: 'seller'}],
+        //     });
+        // }
+
+
         props.navigation.replace("ChooseType")
     }
 
