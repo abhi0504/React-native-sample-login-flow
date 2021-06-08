@@ -11,16 +11,20 @@ function LoadingScreen(props) {
 
     const check = async() => {
         var user_token = await AsyncStorage.getItem('user_token')
-        /*
         if(user_token!==null){
             var decode = jwtDecode(user_token);
-            props.setLocation(decode.latitude,decode.longitude);
+            if(decode.latitude){
+                props.setLocation(decode.latitude,decode.longitude);
+            } else {
+                var latitude = await AsyncStorage.getItem('latitude');
+                var longitude = await AsyncStorage.getItem('longitude');
+                props.setLocation(latitude,longitude);
+            }            
             return props.navigation.reset({
                 index: 0,
                 routes: [{name: 'Consumer'}],
             });
         }
-        */
 
         //for shop add redux settlement
 
