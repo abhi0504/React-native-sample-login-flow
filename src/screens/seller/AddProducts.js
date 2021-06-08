@@ -1,5 +1,5 @@
 import React, { Component , useState } from 'react';
-import { Text , View , Dimensions , StyleSheet , Image , TextInput , TouchableOpacity , ScrollView} from 'react-native';
+import { Text , View , Dimensions , StyleSheet , Image , TextInput , TouchableOpacity , ScrollView ,AsyncStorage} from 'react-native';
 import Navbar from '../../components/Navbar'
 import ImageCropPicker from 'react-native-image-crop-picker';
 import storage from '@react-native-firebase/storage';
@@ -80,7 +80,18 @@ function AddProducts (props) {
             product_image: img,
             product_type: value
         }
-        axios.post(`${url}/shop/product`,product)
+
+        var token = await AsyncStorage.getItem('shop_token');
+        console.log(token);
+
+        console.log(product);
+
+        axios.post(`${url}/shop/product`, product , {
+            headers: {
+                'Content-Type': 'application/json',
+                "Authorization": `Bearer ${token}`
+            }
+            })
         .then(async(res) => {
             console.log("response");
             console.log(res.data);
