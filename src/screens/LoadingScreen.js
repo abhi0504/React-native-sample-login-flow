@@ -4,6 +4,7 @@ import { View,Image, Text,AsyncStorage ,Dimensions} from 'react-native';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux'
 import { setLocation } from '../redux/consumer/actions/latlngactions';
+import { setCartProducts } from '../redux/consumer/actions/cartActions';
 
 const {height,width} = Dimensions.get('window')
 
@@ -13,6 +14,7 @@ function LoadingScreen(props) {
         var user_token = await AsyncStorage.getItem('user_token')
         if(user_token!==null){
             var decode = jwtDecode(user_token);
+            props.setCartProducts(user_token);
             if(decode.latitude){
                 props.setLocation(decode.latitude,decode.longitude);
             } else {
@@ -58,6 +60,7 @@ function LoadingScreen(props) {
 
 LoadingScreen.propTypes = {
     setLocation: PropTypes.func.isRequired,
+    setCartProducts: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => ({
@@ -65,7 +68,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapActionsToProps = {
-    setLocation
+    setLocation,
+    setCartProducts
 }
 
 export default connect(mapStateToProps,mapActionsToProps)(LoadingScreen);

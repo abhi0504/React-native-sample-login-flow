@@ -33,6 +33,7 @@ import store from './src/redux/store';
 import Icon2 from 'react-native-vector-icons/Fontisto'
 import Icon3 from 'react-native-vector-icons/SimpleLineIcons'
 import ShopProducts from './src/screens/consumer/ShopProducts';
+import CartIcon from './src/screens/consumer/ConsumerComponents/CartIcon';
 
 
 
@@ -144,7 +145,7 @@ function ConsumerStackScreens() {
         <ConsumerStack.Screen options={{
           tabBarLabel: 'Shops',
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="cart-outline" color={color} size={31} />
+            <CartIcon color={color} />
           ),
         }} name="cart" component={NearbyShops} />
       <ConsumerStack.Screen
