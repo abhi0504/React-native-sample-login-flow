@@ -18,3 +18,7 @@ export const setCartProducts = (token) => dispatch => {
         dispatch({type:SET_CART_ITEMS,products:res.data,total:total})
     })
 }
+
+export const addToCart = (product) => dispatch => {
+
+}

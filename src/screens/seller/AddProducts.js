@@ -1,18 +1,26 @@
-import React, { Component , useState } from 'react';
+import axios from "axios"
+import React, {useState } from 'react';
 import { Text , View , Dimensions , StyleSheet , Image , TextInput , TouchableOpacity , ScrollView ,AsyncStorage} from 'react-native';
-import Navbar from '../../components/Navbar'
 import ImageCropPicker from 'react-native-image-crop-picker';
 import storage from '@react-native-firebase/storage';
 import DropDownPicker from 'react-native-dropdown-picker';
 import url from '../../api/api'
-import axios from "axios"
-
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-function AddProducts (props) {
+const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
+function generateString(length) {
+    let result = ' ';
+    const charactersLength = characters.length;
+    for ( let i = 0; i < length; i++ ) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+}
+
+function AddProducts (props) {
     
     const [name , setName] = useState("");
     const [price , setPrice] = useState("");
@@ -44,17 +52,6 @@ function AddProducts (props) {
         })
     }
 
-    const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-
-    function generateString(length) {
-        let result = ' ';
-        const charactersLength = characters.length;
-        for ( let i = 0; i < length; i++ ) {
-            result += characters.charAt(Math.floor(Math.random() * charactersLength));
-        }
-        return result;
-    }
-
     const uploadImageToFirebase = async() => {
         if(path){
             setLoading(true);
@@ -68,6 +65,31 @@ function AddProducts (props) {
         } else {
             console.log("No image");
         }
+    }
+
+    const addProduct = async() => {
+        await uploadImageToFirebase();
+        const product = {
+            product_name:name,
+            product_price: parseInt(price),
+            product_quantity: parseInt(qty), 
+            //product_description: description,
+            product_image: img,
+            product_type: 'packaged'
+        }
+        var token = await AsyncStorage.getItem('shop_token');
+        console.log(token);
+        console.log(product);
+        axios.post(`${url}/shop/product`,product,{
+            headers: {
+                'Content-Type': 'application/json',
+                "Authorization": `Bearer ${token}`
+            }
+        }).then(res => {
+            console.log(res.data)
+        }).catch(err => {
+            console.log(err)
+        })
     }
 
     const submitHandler = async() => {
@@ -225,9 +247,7 @@ function AddProducts (props) {
             </View>
             
            <View style={{alignItems: "center" , marginTop: 15}}>
-                <TouchableOpacity style={styles.submit} onPress={() => {
-                    submitHandler()
-                }}>
+                <TouchableOpacity style={styles.submit} onPress={addProduct}>
                      <Text style={{color: "white" , fontFamily: 'Montserrat-Bold' , fontSize: windowHeight*0.025 }} >
                          Save Product
                      </Text>

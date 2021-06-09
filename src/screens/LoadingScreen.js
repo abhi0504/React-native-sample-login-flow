@@ -12,6 +12,7 @@ function LoadingScreen(props) {
 
     const check = async() => {
         var user_token = await AsyncStorage.getItem('user_token')
+        /*
         if(user_token!==null){
             var decode = jwtDecode(user_token);
             props.setCartProducts(user_token);
@@ -27,6 +28,7 @@ function LoadingScreen(props) {
                 routes: [{name: 'Consumer'}],
             });
         }
+        */
 
         //for shop add redux settlement
 
