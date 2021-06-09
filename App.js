@@ -34,6 +34,7 @@ import Icon2 from 'react-native-vector-icons/Fontisto'
 import Icon3 from 'react-native-vector-icons/SimpleLineIcons'
 import ShopProducts from './src/screens/consumer/ShopProducts';
 import CartIcon from './src/screens/consumer/ConsumerComponents/CartIcon';
+import Cart from './src/screens/consumer/Cart';
 
 
 
@@ -147,7 +148,7 @@ function ConsumerStackScreens() {
           tabBarIcon: ({ color, size }) => (
             <CartIcon color={color} />
           ),
-        }} name="cart" component={Orders} />
+        }} name="cart" component={Cart} />
       <ConsumerStack.Screen
       options={{
         tabBarLabel: 'Orders',

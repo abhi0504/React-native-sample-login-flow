@@ -10,13 +10,21 @@ import {connect} from 'react-redux'
 
 const {height,width} = Dimensions.get('window')
 
-function ProductCard({item,token,addToCart,removeFromCart}) {
+function CartProduct({item,token,addToCart,removeFromCart,changeTotal}) {
     const navigation = useNavigation();
     const [quantity,setQuantity] = React.useState(0);
+    const [tot,setTot] = React.useState(0)
+
+    React.useEffect(() => {
+        setQuantity(item.quantity)
+        setTot(item.total)
+    },[])
 
     const addProductToCart = () => {
         //addToCart(item);
         setQuantity(quantity+1)
+        setTot(tot+item.product_price)
+        changeTotal(item.product_price,'inc')
         axios.get(`${url}/consumer/cart/${item.product_id}`,{
             headers: {
                 'Content-Type': 'application/json',
@@ -30,7 +38,9 @@ function ProductCard({item,token,addToCart,removeFromCart}) {
 
     const subtractFromCart = () => {
         removeFromCart(item);
+        setTot(tot-item.product_price)
         setQuantity(quantity-1)
+        changeTotal(item.product_price,'dec')
         axios.delete(`${url}/consumer/cart/${item.product_id}`,{
             headers: {
                 'Content-Type': 'application/json',
@@ -49,6 +59,7 @@ function ProductCard({item,token,addToCart,removeFromCart}) {
                 <View style={{paddingTop:9,flex:1}}>
                     <Text numberOfLines={2} style={{fontSize:21,color:'#101010',fontFamily:'Montserrat-medium',textTransform:'capitalize'}}>{item.product_name}</Text>
                     <Text style={{fontSize:16.5,marginLeft:0,paddingTop:5,textTransform:'capitalize'}}>Price Rs: {item.product_price}</Text>
+                    <Text style={{fontSize:16.5,marginLeft:0,paddingTop:5,textTransform:'capitalize'}}>Total Rs: {tot}</Text>
                     <Text style={{fontSize:16.5,marginLeft:0,paddingTop:5,textTransform:'capitalize'}}>{item.product_type}</Text>
                 </View>
             </View>
@@ -81,7 +92,7 @@ function ProductCard({item,token,addToCart,removeFromCart}) {
     )
 }
 
-ProductCard.propTypes = {
+CartProduct.propTypes = {
     addToCart: PropTypes.func.isRequired,
     removeFromCart: PropTypes.func.isRequired,
 }
@@ -95,4 +106,4 @@ const mapActionsToProps = {
     removeFromCart
 }
 
-export default connect(mapStateToProps,mapActionsToProps)(ProductCard);
+export default connect(mapStateToProps,mapActionsToProps)(CartProduct);
