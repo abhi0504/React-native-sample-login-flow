@@ -4,14 +4,18 @@ import { View, Text, AsyncStorage,Dimensions,Image ,TouchableOpacity,TouchableWi
 import Icon from 'react-native-vector-icons/Ionicons'
 import { useNavigation } from '@react-navigation/native';
 import { url } from '../../../api/api';
+import { addToCart , removeFromCart} from '../../../redux/consumer/actions/cartActions';
+import PropTypes from 'prop-types';
+import {connect} from 'react-redux'
 
 const {height,width} = Dimensions.get('window')
 
-function ProductCard({item,token}) {
+function ProductCard({item,token,addToCart,removeFromCart}) {
     const navigation = useNavigation();
     const [quantity,setQuantity] = React.useState(0);
 
     const addProductToCart = () => {
+        //addToCart(item);
         setQuantity(quantity+1)
         axios.get(`${url}/consumer/cart/${item.product_id}`,{
             headers: {
@@ -20,10 +24,12 @@ function ProductCard({item,token}) {
             }
         }).then(res => {
             console.log(res.data);
+            addToCart(res.data);
         })
     }
 
     const subtractFromCart = () => {
+        removeFromCart(item);
         setQuantity(quantity-1)
         axios.get(`${url}/consumer/cart/remove/${item.product_id}`,{
             headers: {
@@ -75,4 +81,18 @@ function ProductCard({item,token}) {
     )
 }
 
-export default ProductCard;
+ProductCard.propTypes = {
+    addToCart: PropTypes.func.isRequired,
+    removeFromCart: PropTypes.func.isRequired,
+}
+
+const mapStateToProps = (state) => ({
+    latlng:state.latlng
+})
+
+const mapActionsToProps = {
+    addToCart,
+    removeFromCart
+}
+
+export default connect(mapStateToProps,mapActionsToProps)(ProductCard);

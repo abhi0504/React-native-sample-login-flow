@@ -141,13 +141,13 @@ function ConsumerStackScreens() {
           tabBarIcon: ({ color, size }) => (
             <Icon2 name="search" color={color} size={25} />
           ),
-        }} name="search" component={NearbyShops} />
+        }} name="search" component={Orders} />
         <ConsumerStack.Screen options={{
           tabBarLabel: 'Shops',
           tabBarIcon: ({ color, size }) => (
             <CartIcon color={color} />
           ),
-        }} name="cart" component={NearbyShops} />
+        }} name="cart" component={Orders} />
       <ConsumerStack.Screen
       options={{
         tabBarLabel: 'Orders',
