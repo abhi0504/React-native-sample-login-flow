@@ -26,6 +26,7 @@ import AddProducts from './src/screens/seller/AddProducts';
 import NearbyShops from './src/screens/consumer/NearbyShops';
 import SellerScreen from './src/screens/seller/SellerScreen';
 import sellerOverview from './src/screens/seller/sellerOverview';
+import OrderDetails from './src/screens/seller/OrderDetails';
 import Orders from './src/screens/consumer/Orders';
 import ConsumerProfile from './src/screens/consumer/ConsumerProfile';
 import { Provider } from 'react-redux';
@@ -204,6 +205,7 @@ function App() {
         <Stack.Screen name="Consumer" component={ConsumerStackScreens} />
         <Stack.Screen name="Seller" component={SellerStackScreens} />
         <Stack.Screen name="AddProducts" component={AddProducts} />
+        <Stack.Screen name="OrderDetails" component={OrderDetails} />
       </Stack.Navigator>
     </NavigationContainer>
     </Provider>

@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Header from '../consumer/ConsumerComponents/Header';
 import { url } from '../../api/api';
+import ListComponent from '../../components/ListComponent'
 
 const {height,width} = Dimensions.get('window')
 
@@ -72,44 +73,9 @@ function SellerScreen(props) {
 
     const renderItem = (item) => {
         return(
-        <View>
-            <TouchableOpacity>
-                <View style={styles.renderItem}>
-                    <View style={styles.upper}>
-                        <View style={{flexDirection : "row"}}>
-                            <Image
-                                style={{height: height*0.065 , width: width*0.13 , marginLeft: 10}}
-                                source={require('../../images/user.png')}
-                            />
-
-                            <View style={[{flexDirection: "column" ,justifyContent: "center" , marginLeft: 5}]}>
-                                <Text style={styles.text}>{item.item.consumer_name}</Text>
-                                <Text style={styles.text}>{item.item.consumer_contact}</Text>
-                            </View>
-                            
-                            <View style={{justifyContent: "center" , marginLeft: width*0.35}}>
-                                <Text style={{fontFamily: "Montserrat-ExtraBold"}}>Price: {item.item.tota}</Text>
-                            </View>
-                        </View>
-                    </View>
-                    <View style={styles.mid}>
-                        <View style={{justifyContent: "center" , marginLeft: 10}}>
-                            <View style={{marginBottom: 5}}>
-
-                            <Text style={styles.text}>STATUS : NOT DELIVERED</Text>
-                            </View>
-                            <Text style={styles.text}>PAYMENT : {item.item.payment_status}</Text>
-                        </View>
-                    </View>
-                    <View style={styles.bottom}>
-                        <View style={{justifyContent: "center" , marginLeft: 10}}>
-                            <Text style={styles.text}>ORDERED ON</Text>
-                        </View>
-                            <Text style={styles.text}>{item.item.ordered_time}</Text>
-                    </View>
-                </View>
-            </TouchableOpacity>
-        </View>
+        <ListComponent item={item} navigation={() => {
+            props.navigation.navigate("OrderDetails" , { id: item.index })
+        }}/>
         )
     }
 
