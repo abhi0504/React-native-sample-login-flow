@@ -73,7 +73,7 @@ function AddProducts (props) {
             product_name:name,
             product_price: parseInt(price),
             product_quantity: parseInt(qty), 
-            //product_description: description,
+            product_description: description,
             product_image: img,
             product_type: 'packaged'
         }
@@ -245,16 +245,18 @@ function AddProducts (props) {
                     />
                 </View>
             </View>
-            
-           <View style={{alignItems: "center" , marginTop: 15}}>
-                <TouchableOpacity style={styles.submit} onPress={addProduct}>
+                
+        </View>
+        
+
+        <View style={{alignItems: "center" , marginTop: 15}}>
+                <TouchableOpacity style={styles.submit} onPress={submitHandler}>
                      <Text style={{color: "white" , fontFamily: 'Montserrat-Bold' , fontSize: windowHeight*0.025 }} >
                          Save Product
                      </Text>
                 </TouchableOpacity>
-            </View>      
-        </View>
-        
+            </View>  
+
         </ScrollView>
 
             <View style={{
