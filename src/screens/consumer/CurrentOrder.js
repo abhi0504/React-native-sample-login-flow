@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { View, Text, AsyncStorage,Image,Dimensions } from 'react-native';
-import { setDeliveredOrders } from '../../redux/consumer/actions/orders';
+import { setCurrentOrders } from '../../redux/consumer/actions/orders';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux'
 
 const {height,width} = Dimensions.get('window')
 
-function Delivered(props) {
+function CurrentOrders(props) {
 
     const [loading,setLoading] = React.useState(true);
     const [orders,setOrders] = React.useState([])
@@ -16,7 +16,7 @@ function Delivered(props) {
         setLoading(true)
         var token = await AsyncStorage.getItem('user_token')
         setToken(token);
-        props.setDeliveredOrders(token)
+        props.setCurrentOrders(token)
         setLoading(false)
     }
 
@@ -40,8 +40,8 @@ function Delivered(props) {
     )
 }
 
-Delivered.propTypes = {
-    setDeliveredOrders:PropTypes.func.isRequired
+CurrentOrders.propTypes = {
+    setCurrentOrders:PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => ({
@@ -49,7 +49,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapActionsToProps = {
-    setDeliveredOrders
+    setCurrentOrders
 }
 
-export default connect(mapStateToProps,mapActionsToProps)(Delivered);
+export default connect(mapStateToProps,mapActionsToProps)(CurrentOrders);

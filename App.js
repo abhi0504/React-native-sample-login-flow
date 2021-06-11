@@ -35,8 +35,13 @@ import Icon3 from 'react-native-vector-icons/SimpleLineIcons'
 import ShopProducts from './src/screens/consumer/ShopProducts';
 import CartIcon from './src/screens/consumer/ConsumerComponents/CartIcon';
 import Cart from './src/screens/consumer/Cart';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import CurrentOrders from './src/screens/consumer/CurrentOrder';
+import OutForDelivery from './src/screens/consumer/OutForDelivery';
+import Delivered from './src/screens/consumer/Delivered';
 
 
+const OrdersTab = createMaterialTopTabNavigator();
 
 const Stack = createStackNavigator();
 
@@ -59,6 +64,22 @@ function NearbyShopss() {
       <NearbyShopStack.Screen name="ShopProducts" component={ShopProducts} />
     </NearbyShopStack.Navigator>
   )
+}
+
+function MyTabs() {
+  return (
+    <OrdersTab.Navigator tabBarOptions={{
+      labelStyle: { fontSize: 12 },
+      style: { backgroundColor: '#ff6347' },
+      activeTintColor:'#ff6347',
+      inactiveTintColor:'white',
+      indicatorStyle:{backgroundColor:'white',height:'100%',borderTopLeftRadius:15,borderTopRightRadius:15},
+    }}>
+      <OrdersTab.Screen options={{ tabBarLabel: 'Orders Placed' }} name="Currentorders" component={CurrentOrders} />
+      <OrdersTab.Screen options={{ tabBarLabel: 'Out For Delivery' }} name="OutForDelivery" component={OutForDelivery} />
+      <OrdersTab.Screen options={{ tabBarLabel: 'Delivered' }} name="Delivered" component={Delivered} />
+    </OrdersTab.Navigator>
+  );
 }
 
 function Personal() {
@@ -155,7 +176,7 @@ function ConsumerStackScreens() {
         tabBarIcon: ({ color, size }) => (
           <Icon3 name="bag" color={color} size={size} />
         ),
-      }} name="Orders" component={Orders} />
+      }} name="Orders" component={MyTabs} />
       <ConsumerStack.Screen options={{
           tabBarLabel: 'Profile',
           tabBarIcon: ({ color, size }) => (
