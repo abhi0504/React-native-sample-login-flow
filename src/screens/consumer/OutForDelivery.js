@@ -1,13 +1,13 @@
 import * as React from 'react';
-import { View, Text, AsyncStorage,Image,Dimensions ,FlatList} from 'react-native';
-import { setDeliveredOrders } from '../../redux/consumer/actions/orders';
+import { View, Text, AsyncStorage,Image,Dimensions,FlatList } from 'react-native';
+import { setOutForDeliveryOrders } from '../../redux/consumer/actions/orders';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import OrderCard from './ConsumerComponents/OrderCard';
 
 const {height,width} = Dimensions.get('window')
 
-function Delivered(props) {
+function OutForDelivery(props) {
 
     const [loading,setLoading] = React.useState(true);
     const [orders,setOrders] = React.useState([])
@@ -17,9 +17,9 @@ function Delivered(props) {
         setLoading(true)
         var token = await AsyncStorage.getItem('user_token')
         setToken(token);
-        await props.setDeliveredOrders(token)
-        await setOrders(props.orders.delivered)
-        console.log(orders,'allOrders',props.orders.delivered)
+        await props.setOutForDeliveryOrders(token)
+        await setOrders(props.orders.outForDelivery)
+        console.log(orders,'allOrders',props.orders.outForDelivery)
         setLoading(false)
     }
 
@@ -29,9 +29,9 @@ function Delivered(props) {
 
     React.useEffect(() => {
         setLoading(true);
-        setOrders(props.orders.delivered)
+        setOrders(props.orders.outForDelivery)
         setLoading(false);
-    },[props.orders.delivered])
+    },[props.orders.outForDelivery])
 
     return (
         <View style={{flex:1}}>
@@ -44,7 +44,7 @@ function Delivered(props) {
                 <View style={{flex:1,backgroundColor:'white',paddingLeft:5,paddingRight:5,paddingBottom:0}}>
                     <FlatList
                     data={orders}
-                    renderItem={({item,index}) => <OrderCard item={item} status="DELIVERED" /> }
+                    renderItem={({item,index}) => <OrderCard item={item} status="OUT FOR DELIVERY" /> }
                     />
                 </View>
             }
@@ -52,8 +52,8 @@ function Delivered(props) {
     )
 }
 
-Delivered.propTypes = {
-    setDeliveredOrders:PropTypes.func.isRequired
+OutForDelivery.propTypes = {
+    setOutForDeliveryOrders:PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => ({
@@ -61,7 +61,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapActionsToProps = {
-    setDeliveredOrders
+    setOutForDeliveryOrders
 }
 
-export default connect(mapStateToProps,mapActionsToProps)(Delivered);
+export default connect(mapStateToProps,mapActionsToProps)(OutForDelivery);
