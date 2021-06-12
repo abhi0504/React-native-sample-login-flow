@@ -10,6 +10,71 @@ import ListComponent from '../../components/ListComponent'
 const {height,width} = Dimensions.get('window')
 
 function OrderDetails(props) {
+
+const [loading , setLoading] = React.useState(false);
+const [data , setData] = React.useState([]);
+const [orders , setOrders] = React.useState([]);
+
+const OrderDetails =async (DATA) => {
+    setLoading(true)
+    var token = await AsyncStorage.getItem('shop_token');
+    console.log("ALL THE DETAILS ______________________________________");
+    console.log(token);
+    console.log(`${url}/shop/orders/${DATA.order_cart_id}`);
+    console.log(DATA);
+    axios.get(`${url}/shop/orders/${DATA.order_cart_id}`,{
+        headers: {
+            'Content-Type': 'application/json',
+            "Authorization": `Bearer ${token}`
+        }
+    }).then(res => {
+        console.log(":::::::::::::::::");
+        setOrders(res.data);
+        console.log(res.data)
+        console.log(":::::::::::::::::");
+    }).catch(err => {
+        console.log(err)
+    })
+
+    setLoading(false)
+}
+
+const renderItem = ({item}) => {
+
+    return(
+        <View style={{flexDirection: "row" , marginTop: 10 , justifyContent: "space-between" , marginRight: width*0.1}}>
+
+
+                    <View style={{marginLeft: 15 , flexDirection: "row"}}>
+                        <View>
+                            <Image 
+                                source={{uri : item.product_image}}
+                                style= {{height: 40 , width: 40 , marginRight: 10}}
+                            />
+                        </View>
+                        <View>
+                        <Text style={{fontFamily: "Montserrat" , fontSize: width*0.04 ,}}>{item.product_name}</Text>
+                        <Text style={{fontFamily: "Montserrat" , fontSize: width*0.04 , marginLeft: 5}}>{item.product_price} X {item.quantity}</Text>
+                        </View>
+                    </View>
+
+                    <View style={{}}>
+                        <Text style={{fontFamily: "Montserrat" , fontSize: width*0.04 ,}}>
+                        {item.total}
+                        </Text>
+                    </View>
+                    
+                </View> 
+    )
+}
+
+React.useEffect(() => {
+    // setLoading(true);
+    setData(props.route.params.item.item);
+    OrderDetails(data);
+    // setLoading(fal);
+}, [])
+
     return (
         <ScrollView style={{flex: 1 , backgroundColor: "white"}}>
             <Text style={{marginLeft : width*0.05 , fontFamily: "Montserrat-ExtraBold" , fontSize: width*0.06 , marginTop: height*0.05 , color: "#0ae38c"}}>ORDER SUMMARY</Text>
@@ -17,8 +82,8 @@ function OrderDetails(props) {
             <View style={{marginLeft: width*0.08 , marginTop: height*0.01}}>
                 <Text style={{fontFamily: "Montserrat-ExtraBold" , fontSize: width*0.05 }}>DELIVER TO</Text>   
                 <View style={{marginTop: 5}}>
-                <Text style={{fontFamily: "Montserrat-Bold" , fontSize: width*0.04 , marginLeft: 5 }}>Abhishek Sharma</Text> 
-                <Text style={{fontFamily: "Montserrat-Bold" , fontSize: width*0.04 , marginLeft: 5  }}>New Delhi , Shahdara , India</Text>   
+                <Text style={{fontFamily: "Montserrat-Bold" , fontSize: width*0.04 , marginLeft: 5 }}>{data.consumer_name}</Text> 
+                <Text style={{fontFamily: "Montserrat-Bold" , fontSize: width*0.04 , marginLeft: 5  }}>{data.consumer_address}</Text>   
                 </View>
             </View>
 
@@ -34,7 +99,7 @@ function OrderDetails(props) {
                             </View>
                             <Text style={{fontFamily: "Montserrat-Bold" , fontSize: width*0.04}}>PAYMENT</Text>
                             <View style={{backgroundColor: "#0ae38c" ,width: width*0.5 , alignItems: "center"}}>
-                             <Text style={{color :"white" , fontSize: width*0.04, marginLeft: 5 ,fontFamily: "Montserrat-Bold" }}>DONE</Text>
+                             <Text style={{color :"white" , fontSize: width*0.04, marginLeft: 5 ,fontFamily: "Montserrat-Bold" }}>{data.payment_status}</Text>
                             </View>
                             </View>
                 </View> 
@@ -42,57 +107,21 @@ function OrderDetails(props) {
 
             <View style={{marginLeft: width*0.08 , marginTop: height*0.04}}>
                 <Text style={{fontFamily: "Montserrat-ExtraBold" , fontSize: width*0.05 }}>ORDER</Text> 
-                <View style={{flexDirection: "row" , marginTop: 10 , justifyContent: "space-between" , marginRight: width*0.1}}>
 
-                    <View style={{marginLeft: 15 }}>
-                        <Text style={{fontFamily: "Montserrat" , fontSize: width*0.04 ,}}>AAM KA AACHAR</Text>
-                        <Text style={{fontFamily: "Montserrat" , fontSize: width*0.04 , marginLeft: 5}}> X 1.5 Kg</Text>
-                    </View>
+                {!loading ? <FlatList
+                    data={orders}
+                    renderItem={renderItem}
+                    keyExtractor={item => item.product_id}
+                /> : <ActivityIndicator size="large" color="#00ff00" /> }
 
-                    <View style={{}}>
-                        <Text style={{fontFamily: "Montserrat" , fontSize: width*0.04 ,}}>
-                        ₹ 599.00
-                        </Text>
-                    </View>
-                    
-                </View>
-
-                <View style={{flexDirection: "row" , marginTop: 10 , justifyContent: "space-between" , marginRight: width*0.1}}>
-
-                    <View style={{marginLeft: 15 }}>
-                        <Text style={{fontFamily: "Montserrat" , fontSize: width*0.04 ,}}>AAM KA AACHAR</Text>
-                        <Text style={{fontFamily: "Montserrat" , fontSize: width*0.04 , marginLeft: 5}}> X 1.5 Kg</Text>
-                    </View>
-
-                    <View style={{}}>
-                        <Text style={{fontFamily: "Montserrat" , fontSize: width*0.04 ,}}>
-                        ₹ 599.00
-                        </Text>
-                    </View>
-                    
-                </View>
-
-                <View style={{flexDirection: "row" , marginTop: 10 , justifyContent: "space-between" , marginRight: width*0.1}}>
-
-                    <View style={{marginLeft: 15 }}>
-                        <Text style={{fontFamily: "Montserrat" , fontSize: width*0.04 ,}}>AAM KA AACHAR</Text>
-                        <Text style={{fontFamily: "Montserrat" , fontSize: width*0.04 , marginLeft: 5}}> X 1.5 Kg</Text>
-                    </View>
-
-                    <View style={{}}>
-                        <Text style={{fontFamily: "Montserrat" , fontSize: width*0.04 ,}}>
-                        ₹ 599.00
-                        </Text>
-                    </View>
-                    
-                </View>      
+                
                 
             </View>
 
             <View style={{alignItems: "center" , marginTop: 20}}>
                 <View style={{backgroundColor: "#0ae38c" ,width: width*0.8 ,alignItems: "center" , justifyContent: "center" , flexDirection: "row" , justifyContent: "space-between"}}>
                   <Text style={{color :"white" , fontSize: width*0.05, marginLeft: 5 , fontFamily: "Montserrat-Bold"}}>GRAND TOTAL</Text>
-                  <Text style={{color :"white" , fontSize: width*0.05, marginRight: 5 , fontFamily: "Montserrat-Bold"}}>₹ 1797.00</Text>
+                  <Text style={{color :"white" , fontSize: width*0.05, marginRight: 5 , fontFamily: "Montserrat-Bold"}}>₹ {data.order_cart_total}</Text>
                 </View>
             </View>
 
@@ -100,24 +129,17 @@ function OrderDetails(props) {
               <Text style={{fontFamily: "Montserrat-ExtraBold" , fontSize: width*0.05 ,marginTop: 20 }}>MORE DETAILS</Text> 
               <View style={{marginTop: 5}}>
                 <Text style={{fontFamily: "Montserrat-Bold" , fontSize: width*0.04 , marginLeft: 5 }}>ORDER ID</Text> 
-                <Text style={{fontFamily: "Montserrat" , fontSize: width*0.04 , marginLeft: 15 }}>876787656721234</Text> 
+                <Text style={{fontFamily: "Montserrat" , fontSize: width*0.04 , marginLeft: 15 }}>{data.order_cart_id}</Text> 
                 <Text style={{fontFamily: "Montserrat-Bold" , fontSize: width*0.04 , marginLeft: 5 , marginTop: 3 }}>PAYMENT TYPE</Text> 
-                <Text style={{fontFamily: "Montserrat" , fontSize: width*0.04 , marginLeft: 15 }}>ONLINE</Text> 
+                <Text style={{fontFamily: "Montserrat" , fontSize: width*0.04 , marginLeft: 15 }}>{data.payment_mode}</Text> 
                 <Text style={{fontFamily: "Montserrat-Bold" , fontSize: width*0.04 , marginLeft: 5 , marginTop: 3}}>DATE AND TIME</Text> 
-                <Text style={{fontFamily: "Montserrat" , fontSize: width*0.04 , marginLeft: 15 }}>12 AUG 2021 , 09:23 AM</Text> 
+                <Text style={{fontFamily: "Montserrat" , fontSize: width*0.04 , marginLeft: 15 }}>{data.ordered_time}</Text> 
                 <Text style={{fontFamily: "Montserrat-Bold" , fontSize: width*0.04 , marginLeft: 5 , marginTop: 3 }}>CONTACT NUMBER</Text> 
-                <Text style={{fontFamily: "Montserrat" , fontSize: width*0.04 , marginLeft: 15 }}>9975436743</Text> 
+                <Text style={{fontFamily: "Montserrat" , fontSize: width*0.04 , marginLeft: 15 }}>{data.consumer_contact}</Text> 
               </View>
 
 
             </View>
-
-
-
-
-
-            
-
 
         </ScrollView>
     )
