@@ -1,8 +1,9 @@
 import * as React from 'react';
-import { View, Text, AsyncStorage,Image,Dimensions } from 'react-native';
+import { View, Text, AsyncStorage,Image,Dimensions ,FlatList} from 'react-native';
 import { setDeliveredOrders } from '../../redux/consumer/actions/orders';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux'
+import {connect} from 'react-redux';
+import OrderCard from './ConsumerComponents/OrderCard';
 
 const {height,width} = Dimensions.get('window')
 
@@ -16,13 +17,21 @@ function Delivered(props) {
         setLoading(true)
         var token = await AsyncStorage.getItem('user_token')
         setToken(token);
-        props.setDeliveredOrders(token)
+        await props.setDeliveredOrders(token)
+        await setOrders(props.orders.delivered)
+        console.log(orders,'allOrders',props.orders.delivered)
         setLoading(false)
     }
 
     React.useEffect(() => {
         getOrders()
     },[])
+
+    React.useEffect(() => {
+        setLoading(true);
+        setOrders(props.orders.delivered)
+        setLoading(false);
+    },[props.orders.delivered])
 
     return (
         <View style={{flex:1}}>
@@ -32,8 +41,11 @@ function Delivered(props) {
                     <Image source={require('../../images/l2.gif')} resizeMode='contain' style={{width:width}} />
                 </View>
                 :
-                <View>
-                    <Text>Hi</Text>
+                <View style={{flex:1,backgroundColor:'white',paddingLeft:5,paddingRight:5,paddingBottom:0}}>
+                    <FlatList
+                    data={orders}
+                    renderItem={({item,index}) => <OrderCard item={item} status="DELIVERED" /> }
+                    />
                 </View>
             }
         </View>

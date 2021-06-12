@@ -28,7 +28,9 @@ function Cart(props) {
         }).then(res => {
             console.log(res.data);
             setData(res.data);
-            setTotal(res.data[0].cart_total)
+            if(res.data.length > 0){
+                setTotal(res.data[0].cart_total)
+            } 
             setLoading(false);
         }).catch(err => {
             console.log(err);

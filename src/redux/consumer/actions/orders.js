@@ -11,7 +11,7 @@ export const setCurrentOrders = (token) => dispatch => {
         }
     }).then(res => {
         console.log(res.data)
-        dispatch({type:SET_CURRENT_ORDERS,currentorders:res.data})
+        dispatch({type:SET_CURRENT_ORDERS,currentOrders:res.data})
     }).catch(err=> {
         console.log(err);
     })

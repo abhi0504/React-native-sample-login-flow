@@ -13,6 +13,7 @@ function LoadingScreen(props) {
     const check = async() => {
         var user_token = await AsyncStorage.getItem('user_token')
         if(user_token!==null){
+            console.log(user_token);
             var decode = jwtDecode(user_token);
             props.setCartProducts(user_token);
             if(decode.latitude){
