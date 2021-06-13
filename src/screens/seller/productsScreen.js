@@ -5,11 +5,11 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Header from '../consumer/ConsumerComponents/Header';
 import { url } from '../../api/api';
-import ListComponent from '../../components/ListComponent'
+import ProductsList from '../../components/productsList'
 
 const {height,width} = Dimensions.get('window')
 
-function SellerScreen(props) {
+function ProductsScreen(props) {
 
     const [t,setT] = React.useState('')
     const [products , setProducts] = React.useState([]);
@@ -28,36 +28,11 @@ function SellerScreen(props) {
         setLoading(false)
     },[])
 
-    const addProduct = async() => {
-        //await uploadImageToFirebase();
-        const product = {
-            product_name:'new',
-            product_price: 10,
-            product_quantity: 5, 
-            //product_description: description,
-            product_image: '',
-            product_type: 'packaged'
-        }
-        var token = await AsyncStorage.getItem('shop_token');
-        console.log(token);
-        console.log(product);
-        axios.post(`${url}/shop/product`,product,{
-            headers: {
-                'Content-Type': 'application/json',
-                "Authorization": `Bearer ${token}`
-            }
-        }).then(res => {
-            console.log(res.data)
-        }).catch(err => {
-            console.log(err)
-        })
-    }
-
     const fetchProducts = async() => {
         console.log("HERE");
         var token = await AsyncStorage.getItem('shop_token');
         console.log(token);
-        axios.get(`${url}/shop/orders`,{
+        axios.get(`${url}/shop/products`,{
             headers: {
                 'Content-Type': 'application/json',
                 "Authorization": `Bearer ${token}`
@@ -73,32 +48,28 @@ function SellerScreen(props) {
 
     const renderItem = (item) => {
         return(
-        <ListComponent item={item} navigation={() => {
-            props.navigation.navigate("OrderDetails" , { item: item })
-        }}/>
+        <ProductsList item={item} navigation={() => {
+            // props.navigation.navigate("OrderDetails" , { item: item })
+        }}/> 
         )
     }
 
     return (
         <View style={{flex:1}}>
             <Header backgroundColor='#0ae38c' header='Seller' height={55} width={width} />
-            <View style={{marginTop: 20 , alignItems: "center"}}>
+
+            <TouchableOpacity onPress={() => {props.navigation.navigate("AddProducts")}} style={{marginTop: 20 , alignItems: "center"}}>
                 <View style={{height: height*0.06 , width: width*0.5 , borderRadius: 200 , backgroundColor: "#0ae38c" , alignItems: "center" , justifyContent: "center"}}>
-                    <Text style={{color: "white" , fontFamily: "Montserrat-ExtraBold" , fontSize: height*0.02}}>Current Orders</Text>
+                    <Text style={{color: "white" , fontFamily: "Montserrat-ExtraBold" , fontSize: height*0.02}}>Add More Products</Text>
                 </View>
-            </View>
-            {/* <TouchableOpacity onPress={addProduct}>
-                <Text>Call</Text>
-            </TouchableOpacity> */}
-            {/* <TouchableOpacity style={{width: 50 , height: 50 , backgroundColor: "orange"}} onPress={fetchProducts}>
-                <Text>Fetch Orders</Text>
-            </TouchableOpacity> */}
+            </TouchableOpacity>
+            
             {loading ?  <ActivityIndicator size="large" color="#00ff00" /> : 
             <View style={{marginTop: 10 , alignItems: "center" , marginBottom : height*0.17}}>
                 <FlatList 
                     data={products}
                     renderItem={renderItem}
-                    keyExtractor={item => item.order_cart_id}
+                    keyExtractor={item => item.product_id}
                 />
             </View>
             }
@@ -138,4 +109,4 @@ const styles = StyleSheet.create({
     }
   });
 
-export default SellerScreen;
+export default ProductsScreen;

@@ -26,6 +26,7 @@ import AddProducts from './src/screens/seller/AddProducts';
 import NearbyShops from './src/screens/consumer/NearbyShops';
 import SellerScreen from './src/screens/seller/SellerScreen';
 import sellerOverview from './src/screens/seller/sellerOverview';
+import productsScreen from './src/screens/seller/productsScreen';
 import OrderDetails from './src/screens/seller/OrderDetails';
 import Orders from './src/screens/consumer/Orders';
 import ConsumerProfile from './src/screens/consumer/ConsumerProfile';
@@ -129,7 +130,7 @@ function SellerStackScreens() {
           tabBarIcon: ({ color, size }) => (
             <Icon2 name="search" color={color} size={25} />
           ),
-        }} name="search" component={SellerScreen} />
+        }} name="search" component={productsScreen} />
         <SellerStack.Screen options={{
           tabBarLabel: 'Shops',
           tabBarIcon: ({ color, size }) => (

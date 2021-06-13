@@ -30,6 +30,7 @@ function LoadingScreen(props) {
         }
         //for shop add redux settlement
 
+        // var shop_token = await AsyncStorage.getItem('shop_token')
         // if(shop_token!==null){
         //     var decode = jwtDecode(user_token);
         //     return props.navigation.reset({
