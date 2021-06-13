@@ -40,6 +40,7 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import CurrentOrders from './src/screens/consumer/CurrentOrder';
 import OutForDelivery from './src/screens/consumer/OutForDelivery';
 import Delivered from './src/screens/consumer/Delivered';
+import ConsumerOrderDetails from './src/screens/consumer/OrderDetails';
 
 
 const OrdersTab = createMaterialTopTabNavigator();
@@ -55,6 +56,19 @@ const ConsumerStack = createBottomTabNavigator();
 const SellerStack = createBottomTabNavigator();
 
 const NearbyShopStack = createStackNavigator();
+
+const Pending = createStackNavigator();
+
+function PendingOrders() {
+  return (
+    <Pending.Navigator screenOptions={{
+      headerShown: false
+    }}>
+      <Pending.Screen name="current" component={CurrentOrders} />
+      <Pending.Screen name="orderDetails" component={ConsumerOrderDetails} />
+    </Pending.Navigator>
+  )
+}
 
 function NearbyShopss() {
   return (
@@ -76,7 +90,7 @@ function MyTabs() {
       inactiveTintColor:'white',
       indicatorStyle:{backgroundColor:'white',height:'100%',borderTopLeftRadius:15,borderTopRightRadius:15},
     }}>
-      <OrdersTab.Screen options={{ tabBarLabel: 'Orders Placed' }} name="Currentorders" component={CurrentOrders} />
+      <OrdersTab.Screen options={{ tabBarLabel: 'Orders Placed' }} name="Currentorders" component={PendingOrders} />
       <OrdersTab.Screen options={{ tabBarLabel: 'Out For Delivery' }} name="OutForDelivery" component={OutForDelivery} />
       <OrdersTab.Screen options={{ tabBarLabel: 'Delivered' }} name="Delivered" component={Delivered} />
     </OrdersTab.Navigator>

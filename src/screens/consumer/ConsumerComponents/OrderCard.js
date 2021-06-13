@@ -13,11 +13,14 @@ const {height,width} = Dimensions.get('window')
 
 function OrderCard(props){
 
+    const navigation = useNavigation();
+
     var relativeTime = require('dayjs/plugin/relativeTime')
     dayjs.extend(relativeTime)
 
     return (
-        <View style={{paddingLeft:15,paddingTop:15,paddingBottom:15,paddingRight:15,borderRadius:10.5,borderColor:'#ff6347',borderWidth:1,marginTop:9,marginBottom:5}}>
+        <TouchableWithoutFeedback onPress={() => navigation.push('orderDetails',{orderId:props.item.order_cart_id,item:props.item})}>
+            <View style={{paddingLeft:15,paddingTop:15,paddingBottom:15,paddingRight:15,borderRadius:10.5,borderColor:'#ff6347',borderWidth:1,marginTop:9,marginBottom:5}}>
             <View style={{flexDirection : "row"}}>
                 <Image
                     style={{height: width*0.125 , width: width*0.125}}
@@ -54,6 +57,7 @@ function OrderCard(props){
                     <Text style={styles.text}>{dayjs(props.item.ordered_time).format('DD MMMM')}</Text>
             </View>
         </View>
+        </TouchableWithoutFeedback>
     )
 }
 
