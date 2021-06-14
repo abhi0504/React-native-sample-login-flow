@@ -49,7 +49,7 @@ function ProductsScreen(props) {
     const renderItem = (item) => {
         return(
         <ProductsList item={item} navigation={() => {
-            // props.navigation.navigate("OrderDetails" , { item: item })
+            props.navigation.navigate("ProductDetails" , {item: item})
         }}/> 
         )
     }
