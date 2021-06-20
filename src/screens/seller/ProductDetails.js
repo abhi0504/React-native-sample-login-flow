@@ -22,7 +22,6 @@ function generateString(length) {
 
 function ProductDetails (props) {
     
-    const [item , setItem] = useState([])
     const [name , setName] = useState("");
     const [price , setPrice] = useState("");
     const [qty , setQty] = useState("");
@@ -33,55 +32,28 @@ function ProductDetails (props) {
     const [loading, setLoading] = useState(false);
     const [value, setValue] = useState(null);
     const [items, setItems] = useState([
-      {label: 'Type 1', value: '1'},
-      {label: 'Type 2', value: '2'},
-      {label: 'Type 3', value: '3'}
+      {label: 'packaged', value: 'packaged'},
+      {label: 'loose', value: 'loose'},
+      {label: 'individual', value: 'individual'}
      ]);
 
-     const fetchProductDetails = () => {
-        let product = item; 
+     const fetchProductDetails = (product) => {
+
+        setPrice(product.product_price.toString()); 
         setName(product.product_name);
-        console.log(item);
         console.log("******");
-        setPrice(product.product_quantity); 
-        setQty(product.product_price); 
+        setQty(product.product_quantity.toString()); 
+        setImg(product.product_image)
+        setPath(product.product_image)
+        // setItems({label: product.product_type})
      }
 
 
-    const selectImage = () => {
-        ImageCropPicker.openPicker({ 
-            cropping:true
-        }).then(image => {
-            console.log(image);
-            var [category, extension] = image.mime.split("/")
-            console.log(category);
-            const media=[];
-             var media1 = { uri: image.path, width: image.width, height: image.height, mime:image.mime, type: category }
-             media.push(media1)
-             setPath(media)
-        })
-    }
-
-    const uploadImageToFirebase = async() => {
-        if(path){
-            setLoading(true);
-            const name = generateString(9);
-            let reference = storage().ref(name);
-            await reference.putFile(path[0].uri)
-            let url = await reference.getDownloadURL();
-            setImg(url);
-            console.log(url);
-            setLoading(false);
-        } else {
-            console.log("No image");
-        }
-    }
-
     useEffect(() => {
         setLoading(true)
+        console.log("HERE I AMA");
         console.log(props.route.params.item.item);
-        setItem(props.route.params.item.item);
-        fetchProductDetails();
+        fetchProductDetails(props.route.params.item.item);
         setLoading(false)
     },[])
 
@@ -120,7 +92,9 @@ function ProductDetails (props) {
             width: windowHeight*0.2,
             borderRadius: 20
           }}
-          source={path}
+          source={{
+              uri: img
+          }}
         />
         </View> }
 
@@ -148,7 +122,7 @@ function ProductDetails (props) {
                         setPrice(text)
                     }}
                     value={price}
-                    placeholder="Shop Address"
+                    placeholder="Price"
                 />
             </View>
         </View>
@@ -202,7 +176,7 @@ function ProductDetails (props) {
                         setDescription(text)
                     }}
                     value={description}
-                    placeholder="Shop Address"
+                    placeholder="Description of your product"
                 />
             </View>
         </View>

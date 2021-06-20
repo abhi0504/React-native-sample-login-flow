@@ -67,30 +67,30 @@ function AddProducts (props) {
         }
     }
 
-    const addProduct = async() => {
-        await uploadImageToFirebase();
-        const product = {
-            product_name:name,
-            product_price: parseInt(price),
-            product_quantity: parseInt(qty), 
-            product_description: description,
-            product_image: img,
-            product_type: 'packaged'
-        }
-        var token = await AsyncStorage.getItem('shop_token');
-        console.log(token);
-        console.log(product);
-        axios.post(`${url}/shop/product`,product,{
-            headers: {
-                'Content-Type': 'application/json',
-                "Authorization": `Bearer ${token}`
-            }
-        }).then(res => {
-            console.log(res.data)
-        }).catch(err => {
-            console.log(err)
-        })
-    }
+    // const addProduct = async() => {
+    //     await uploadImageToFirebase();
+    //     const product = {
+    //         product_name:name,
+    //         product_price: parseInt(price),
+    //         product_quantity: parseInt(qty), 
+    //         product_description: description,
+    //         product_image: img,
+    //         product_type: 'packaged'
+    //     }
+    //     var token = await AsyncStorage.getItem('shop_token');
+    //     console.log(token);
+    //     console.log(product);
+    //     axios.post(`${url}/shop/product`,product,{
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //             "Authorization": `Bearer ${token}`
+    //         }
+    //     }).then(res => {
+    //         console.log(res.data)
+    //     }).catch(err => {
+    //         console.log(err)
+    //     })
+    // }
 
     const submitHandler = async() => {
         await uploadImageToFirebase();
@@ -108,19 +108,22 @@ function AddProducts (props) {
 
         console.log(product);
 
-        axios.post(`${url}/shop/product`, product , {
-            headers: {
-                'Content-Type': 'application/json',
-                "Authorization": `Bearer ${token}`
-            }
-            })
-        .then(async(res) => {
-            console.log("response");
-            console.log(res.data);
-        })
-        .catch(err => {
-            console.log(err);
-        })
+        console.log(props);
+        props.route.params.addProducts(product)
+
+        // axios.post(`${url}/shop/product`, product , {
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //         "Authorization": `Bearer ${token}`
+        //     }
+        //     })
+        // .then(async(res) => {
+        //     console.log("response");
+        //     console.log(res.data);
+        // })
+        // .catch(err => {
+        //     console.log(err);
+        // })
     }
 
 
