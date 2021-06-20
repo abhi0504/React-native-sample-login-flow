@@ -43,6 +43,7 @@ import CurrentOrders from './src/screens/consumer/CurrentOrder';
 import OutForDelivery from './src/screens/consumer/OutForDelivery';
 import Delivered from './src/screens/consumer/Delivered';
 import ConsumerOrderDetails from './src/screens/consumer/OrderDetails';
+import AllAddress from './src/screens/consumer/AllAddress';
 import SellerProfile from './src/screens/seller/SellerProfile';
 import ordersOutForDelivery from './src/screens/seller/ordersStatus/ordersOutForDelivery';
 import deliveredOrders from './src/screens/seller/ordersStatus/deliveredOrders';
@@ -64,6 +65,19 @@ const SellerStack = createBottomTabNavigator();
 const NearbyShopStack = createStackNavigator();
 
 const Pending = createStackNavigator();
+
+const CProfileStack = createStackNavigator();
+
+function CPS() {
+  return (
+    <CProfileStack.Navigator screenOptions={{
+      headerShown: false
+    }}>
+      <CProfileStack.Screen name="myprofile" component={ConsumerProfile} />
+      <CProfileStack.Screen name="allAddress" component={AllAddress} />
+    </CProfileStack.Navigator>
+  )
+}
 
 function PendingOrders() {
   return (
@@ -205,7 +219,7 @@ function ConsumerStackScreens() {
           tabBarIcon: ({ color, size }) => (
             <Icon2 name="person" color={color} size={size} />
           ),
-        }} name="Profile" component={ConsumerProfile} />
+        }} name="Profile" component={CPS} />
       </ConsumerStack.Navigator>
   )
 }
