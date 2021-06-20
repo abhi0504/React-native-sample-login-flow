@@ -97,11 +97,11 @@ function ConsumerSignup2(props) {
         }
         }).then(response => {
             console.log(response.data);
-            updateAddress(response.data.addressId)
+            updateAddress(response.data.addressId,response.data)
         })
     }
 
-    const updateAddress = async(addressId) => {
+    const updateAddress = async(addressId,address) => {
         var token = await AsyncStorage.getItem('user_token');
         console.log(token);
         axios.get(`${url}/consumer/address/update/${addressId}`,{
@@ -110,11 +110,26 @@ function ConsumerSignup2(props) {
             }
         }).then(response => {
             console.log(response.data);
-            setCll(false);
-            props.navigation.reset({
-                index: 0,
-                routes: [{name: 'Consumer'}],
-            });
+            var newAddress = {
+                consumer_address:address.consumer_address,
+                addressId:addressId,
+                longitude:address.longitude,
+                latitude:address.latitude,
+                state:address.consumer_state
+            }
+            axios.post(`${url}/consumer/changeAddress`,newAddress,{
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            }).then (async(resp) => {
+                console.log(resp.data)
+                await AsyncStorage.setItem('user_token',resp.data.token)
+                setCll(false);
+                props.navigation.reset({
+                    index: 0,
+                    routes: [{name: 'Consumer'}],
+                });
+            })
         })
     }
 

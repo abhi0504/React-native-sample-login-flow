@@ -52,6 +52,10 @@ function NearbyShops(props) {
         getNearByShops()
     },[])
 
+    React.useEffect(() => {
+        getNearByShops()
+    },[props.latlng])
+
     return (
         <View style={{flex:1}}>
             <StatusBar backgroundColor="#ff6347" />
