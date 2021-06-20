@@ -5,6 +5,8 @@ import cartReducer from './consumer/reducers/cartReducer';
 import latlngreducer from './consumer/reducers/latlngreducer';
 import ordersReducer from './consumer/reducers/ordersReducer';
 
+import sordersReducer from './seller/reducers/ordersReducers';
+
 const initialState = {};
 
 const middleware = [thunk]
@@ -12,7 +14,8 @@ const middleware = [thunk]
 const reducers = combineReducers({
     latlng:latlngreducer,
     cartItems:cartReducer,
-    orders:ordersReducer
+    orders:ordersReducer,
+    sorders: sordersReducer
 })
 
 const store = createStore(reducers,initialState,compose(applyMiddleware(...middleware)))

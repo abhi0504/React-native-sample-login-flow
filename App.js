@@ -44,7 +44,6 @@ import OutForDelivery from './src/screens/consumer/OutForDelivery';
 import Delivered from './src/screens/consumer/Delivered';
 import ConsumerOrderDetails from './src/screens/consumer/OrderDetails';
 import SellerProfile from './src/screens/seller/SellerProfile';
-import orderPlaced from './src/screens/seller/ordersStatus/orderPlaced';
 import ordersOutForDelivery from './src/screens/seller/ordersStatus/ordersOutForDelivery';
 import deliveredOrders from './src/screens/seller/ordersStatus/deliveredOrders';
 
