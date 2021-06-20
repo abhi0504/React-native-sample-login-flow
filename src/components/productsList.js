@@ -21,7 +21,7 @@ function productsList({item , navigation}) {
                         </View>
                     </View>
                     <View style={styles.mid}>
-                        <View style={{justifyContent: "center" , marginLeft: 10}}>
+                        <View style={{justifyContent: "center"}}>
                             <Text style={styles.text}>Name : {item.item.product_name}</Text>
                             <Text style={styles.text}>Price : {item.item.product_price}</Text>
                         </View>
@@ -53,15 +53,13 @@ const styles = StyleSheet.create({
     },
     text: {
         fontFamily: "Montserrat-Bold",
-        color: "white"
+        color: "#0ae38c"
     },
     mid: {
         flex: 0.5,
         flexDirection: "row",
         borderRadius: 20,
-        backgroundColor: "#0ae38c",
-        borderColor: "black",
-        borderWidth: 1
+        backgroundColor: "white"
     },
     bottom: {
         flex: 0.4,

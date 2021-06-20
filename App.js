@@ -28,6 +28,7 @@ import SellerScreen from './src/screens/seller/SellerScreen';
 import sellerOverview from './src/screens/seller/sellerOverview';
 import productsScreen from './src/screens/seller/productsScreen';
 import OrderDetails from './src/screens/seller/OrderDetails';
+import ProductDetails from './src/screens/seller/ProductDetails';
 import Orders from './src/screens/consumer/Orders';
 import ConsumerProfile from './src/screens/consumer/ConsumerProfile';
 import { Provider } from 'react-redux';
@@ -43,6 +44,11 @@ import OutForDelivery from './src/screens/consumer/OutForDelivery';
 import Delivered from './src/screens/consumer/Delivered';
 import ConsumerOrderDetails from './src/screens/consumer/OrderDetails';
 import AllAddress from './src/screens/consumer/AllAddress';
+import SellerProfile from './src/screens/seller/SellerProfile';
+import orderPlaced from './src/screens/seller/ordersStatus/orderPlaced';
+import ordersOutForDelivery from './src/screens/seller/ordersStatus/ordersOutForDelivery';
+import deliveredOrders from './src/screens/seller/ordersStatus/deliveredOrders';
+
 
 
 const OrdersTab = createMaterialTopTabNavigator();
@@ -112,14 +118,22 @@ function MyTabs() {
   );
 }
 
-function Personal() {
+
+function SellerTopTabs() {
   return (
-    <Drawer.Navigator>
-      <Drawer.Screen name="Main" component={MainStackScreens} />
-      <Drawer.Screen name="Profile" component={Profile} />
-    </Drawer.Navigator>
-  )
+    <OrdersTab.Navigator tabBarOptions={{
+      labelStyle: { fontSize: 14.5 , fontFamily: "Montserrat-ExtraBold" },
+      style: { backgroundColor: '#0ae38c' },
+      activeTintColor:'#0ae38c',
+      inactiveTintColor:'white',
+      indicatorStyle:{backgroundColor:'white',height:'100%',borderTopLeftRadius:15,borderTopRightRadius:15},
+    }}> 
+      <OrdersTab.Screen options={{ tabBarLabel: 'Out For Delivery' }} name="OutForDelivery" component={ordersOutForDelivery} />
+      <OrdersTab.Screen options={{ tabBarLabel: 'Delivered' }} name="Delivered" component={deliveredOrders} />
+    </OrdersTab.Navigator>
+  );
 }
+
 
 function SellerStackScreens() {
   return(
@@ -144,26 +158,20 @@ function SellerStackScreens() {
           tabBarIcon: ({ color, size }) => (
             <Icon2 name="search" color={color} size={25} />
           ),
-        }} name="search" component={productsScreen} />
-        <SellerStack.Screen options={{
-          tabBarLabel: 'Shops',
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="cart-outline" color={color} size={31} />
-          ),
-        }} name="cart" component={SellerScreen} />
+        }} name="productsScreen" component={productsScreen} />
       <SellerStack.Screen
       options={{
         tabBarLabel: 'Orders',
         tabBarIcon: ({ color, size }) => (
           <Icon3 name="bag" color={color} size={size} />
         ),
-      }} name="Orders" component={Orders} />
+      }} name="Orders" component={SellerTopTabs} />
       <SellerStack.Screen options={{
           tabBarLabel: 'Profile',
           tabBarIcon: ({ color, size }) => (
             <Icon2 name="person" color={color} size={size} />
           ),
-        }} name="Profile" component={ConsumerProfile} />
+        }} name="Profile" component={SellerProfile} />
       </SellerStack.Navigator>
   )
 }
@@ -236,6 +244,8 @@ function MainStackScreens() {
   )
 }
 
+
+
 function App() {
   return (
     <Provider store={store}>
@@ -256,6 +266,7 @@ function App() {
         <Stack.Screen name="Seller" component={SellerStackScreens} />
         <Stack.Screen name="AddProducts" component={AddProducts} />
         <Stack.Screen name="OrderDetails" component={OrderDetails} />
+        <Stack.Screen name="ProductDetails" component={ProductDetails} />
       </Stack.Navigator>
     </NavigationContainer>
     </Provider>

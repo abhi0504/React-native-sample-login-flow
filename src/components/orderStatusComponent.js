@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 
 const {height,width} = Dimensions.get('window')
 
-function ListComponent({item , navigation}) {
+function orderStatusComponent({item , navigation}) {
     // console.log(item);
     return(
         <View>
@@ -20,29 +20,29 @@ function ListComponent({item , navigation}) {
                             />
 
                             <View style={[{flexDirection: "column" ,justifyContent: "center" , marginLeft: 5}]}>
-                                <Text style={styles.text}>{item.item.consumer_name}</Text>
-                                <Text style={styles.text}>{item.item.consumer_contact}</Text>
+                                <Text style={styles.text}>{item.consumer_name}</Text>
+                                <Text style={styles.text}>{item.consumer_contact}</Text>
                             </View>
                             
                             <View style={{justifyContent: "center" , marginLeft: width*0.35}}>
-                                <Text style={{fontFamily: "Montserrat-ExtraBold"}}>Price: {item.item.tota}</Text>
+                                <Text style={{fontFamily: "Montserrat-ExtraBold"}}>Price: {item.tota}</Text>
                             </View>
                         </View>
                     </View>
                     <View style={styles.mid}>
                         <View style={{justifyContent: "center" , marginLeft: 10}}>
-                            <View style={{marginBottom: 5}}> 
+                            <View style={{marginBottom: 5}}>
 
-                            <Text style={styles.text}>STATUS : NOT DELIVERED</Text>
+                            <Text style={styles.text}>STATUS : {item.delivery_status}</Text>
                             </View>
-                            <Text style={styles.text}>PAYMENT : {item.item.payment_status}</Text>
+                            <Text style={styles.text}>PAYMENT : {item.payment_status}</Text>
                         </View>
                     </View>
                     <View style={styles.bottom}>
                         <View style={{justifyContent: "center" , marginLeft: 10}}>
                             <Text style={styles.text}>ORDERED ON</Text>
                         </View>
-                            <Text style={styles.text}>{item.item.ordered_time}</Text>
+                            <Text style={styles.text}>{item.ordered_time}</Text>
                     </View>
                 </View>
             </TouchableOpacity>
@@ -82,4 +82,4 @@ const styles = StyleSheet.create({
     }
   });
 
-export default ListComponent;
+export default orderStatusComponent;

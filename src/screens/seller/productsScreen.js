@@ -46,10 +46,29 @@ function ProductsScreen(props) {
         })
     }
 
+    const addProducts = async (products) => {
+        console.log(7);
+        var token = await AsyncStorage.getItem('shop_token');
+         axios.post(`${url}/shop/product`, products , {
+            headers: {
+                'Content-Type': 'application/json',
+                "Authorization": `Bearer ${token}`
+            }
+            })
+        .then(async(res) => {
+            console.log("response");
+            console.log(res.data);
+            props.navigation.navigate("productsScreen")
+        })
+        .catch(err => {
+            console.log(err);
+        })
+    }
+
     const renderItem = (item) => {
         return(
         <ProductsList item={item} navigation={() => {
-            // props.navigation.navigate("OrderDetails" , { item: item })
+            props.navigation.navigate("ProductDetails" , {item: item})
         }}/> 
         )
     }
@@ -58,7 +77,7 @@ function ProductsScreen(props) {
         <View style={{flex:1}}>
             <Header backgroundColor='#0ae38c' header='Seller' height={55} width={width} />
 
-            <TouchableOpacity onPress={() => {props.navigation.navigate("AddProducts")}} style={{marginTop: 20 , alignItems: "center"}}>
+            <TouchableOpacity onPress={() => {props.navigation.navigate("AddProducts" ,{addProducts: addProducts})}} style={{marginTop: 20 , alignItems: "center"}}>
                 <View style={{height: height*0.06 , width: width*0.5 , borderRadius: 200 , backgroundColor: "#0ae38c" , alignItems: "center" , justifyContent: "center"}}>
                     <Text style={{color: "white" , fontFamily: "Montserrat-ExtraBold" , fontSize: height*0.02}}>Add More Products</Text>
                 </View>

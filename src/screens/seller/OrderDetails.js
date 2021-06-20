@@ -18,7 +18,7 @@ const [orders , setOrders] = React.useState([]);
 const OrderDetails =async (DATA) => {
     setLoading(true)
     var token = await AsyncStorage.getItem('shop_token');
-    console.log("ALL THE DETAILS ______________________________________");
+    console.log("ALL THE DETAILS");
     console.log(token);
     console.log(`${url}/shop/orders/${DATA.order_cart_id}`);
     console.log(DATA);
@@ -29,6 +29,7 @@ const OrderDetails =async (DATA) => {
         }
     }).then(res => {
         console.log(":::::::::::::::::");
+        console.log("LMAO");
         setOrders(res.data);
         console.log(res.data)
         console.log(":::::::::::::::::");
@@ -101,7 +102,7 @@ React.useEffect(() => {
                             <View style={{backgroundColor: "#0ae38c" ,width: width*0.5 , alignItems: "center"}}>
                              <Text style={{color :"white" , fontSize: width*0.04, marginLeft: 5 ,fontFamily: "Montserrat-Bold" }}>{data.payment_status}</Text>
                             </View>
-                            </View>
+                            </View> 
                 </View> 
             </View>
 
@@ -112,12 +113,9 @@ React.useEffect(() => {
                     data={orders}
                     renderItem={renderItem}
                     keyExtractor={item => item.product_id}
-                /> : <ActivityIndicator size="large" color="#00ff00" /> }
-
-                
-                
+                /> : <ActivityIndicator size="large" color="#00ff00" /> }                
             </View>
-
+ 
             <View style={{alignItems: "center" , marginTop: 20}}>
                 <View style={{backgroundColor: "#0ae38c" ,width: width*0.8 ,alignItems: "center" , justifyContent: "center" , flexDirection: "row" , justifyContent: "space-between"}}>
                   <Text style={{color :"white" , fontSize: width*0.05, marginLeft: 5 , fontFamily: "Montserrat-Bold"}}>GRAND TOTAL</Text>
