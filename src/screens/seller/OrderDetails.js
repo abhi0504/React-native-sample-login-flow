@@ -18,7 +18,7 @@ const [orders , setOrders] = React.useState([]);
 const OrderDetails =async (DATA) => {
     setLoading(true)
     var token = await AsyncStorage.getItem('shop_token');
-    console.log("ALL THE DETAILS ______________________________________");
+    console.log("ALL THE DETAILS");
     console.log(token);
     console.log(`${url}/shop/orders/${DATA.order_cart_id}`);
     console.log(DATA);

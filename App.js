@@ -108,13 +108,12 @@ function MyTabs() {
 function SellerTopTabs() {
   return (
     <OrdersTab.Navigator tabBarOptions={{
-      labelStyle: { fontSize: 12 },
+      labelStyle: { fontSize: 14.5 , fontFamily: "Montserrat-ExtraBold" },
       style: { backgroundColor: '#0ae38c' },
       activeTintColor:'#0ae38c',
       inactiveTintColor:'white',
       indicatorStyle:{backgroundColor:'white',height:'100%',borderTopLeftRadius:15,borderTopRightRadius:15},
-    }}>
-      <OrdersTab.Screen options={{ tabBarLabel: 'Orders Placed' }} name="Currentorders" component={orderPlaced} />
+    }}> 
       <OrdersTab.Screen options={{ tabBarLabel: 'Out For Delivery' }} name="OutForDelivery" component={ordersOutForDelivery} />
       <OrdersTab.Screen options={{ tabBarLabel: 'Delivered' }} name="Delivered" component={deliveredOrders} />
     </OrdersTab.Navigator>
@@ -146,12 +145,6 @@ function SellerStackScreens() {
             <Icon2 name="search" color={color} size={25} />
           ),
         }} name="productsScreen" component={productsScreen} />
-        <SellerStack.Screen options={{
-          tabBarLabel: 'Shops',
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="cart-outline" color={color} size={31} />
-          ),
-        }} name="cart" component={SellerScreen} />
       <SellerStack.Screen
       options={{
         tabBarLabel: 'Orders',

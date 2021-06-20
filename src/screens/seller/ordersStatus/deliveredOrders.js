@@ -1,20 +1,46 @@
-import * as React from 'react';
 import { View, Text, AsyncStorage,Image,Dimensions,FlatList, TouchableOpacity } from 'react-native';
+import React from 'react';
+import axios from 'axios';
+import ListComponent from '../../../components/ListComponent';
+import { url } from '../../../api/api'
+import OrderStatusComponent from '../../../components/orderStatusComponent';
 
 function deliveredOrders() {
-    return(
-        <View>
-            <TouchableOpacity onPress={() => {
-                AsyncStorage.clear()
-            }}>
-                <View style={{height: 100 , width: 100 , backgroundColor: "orange"}}>
-                    <Text>deliveredOrders</Text>
-                </View>
-            </TouchableOpacity>
+    const [ data , setData ] = React.useState([]) 
+
+    let fetchOrders = async () => {
+        console.log("NO PLS NO");
+        console.log("NETWORK ERROR");
+
+        var token = await AsyncStorage.getItem('shop_token');
+        axios.get(`${url}/orders/delivered`,{
+            headers: {
+                'Content-Type': 'application/json',
+                "Authorization": `Bearer ${token}`
+            }
+        }).then(res => {
+            console.log(":+:+:++:+:+:+:++:");
+            console.log(res.data)
+            setData(res.data)
+        }).catch(err => {
+            console.log("error");
+            console.log(err)
+        })
+    } 
+
+    React.useEffect(() => {
+        fetchOrders()
+    },[])
+    
+        return(
+            <View>
+                <FlatList
+                    data={data}
+                    renderItem={OrderStatusComponent}
+                />
+            </View> 
             
-        </View>
-        
-    )
+        )
 }
 
 export default deliveredOrders
