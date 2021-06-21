@@ -33,7 +33,7 @@ function ListComponent({item , navigation}) {
                         <View style={{justifyContent: "center" , marginLeft: 10}}>
                             <View style={{marginBottom: 5}}> 
 
-                            <Text style={styles.text}>STATUS : NOT DELIVERED</Text>
+                            <Text style={styles.text}>STATUS : {item.item.delivery_status}</Text>
                             </View>
                             <Text style={styles.text}>PAYMENT : {item.item.payment_status}</Text>
                         </View>

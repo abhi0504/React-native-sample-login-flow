@@ -102,7 +102,7 @@ function SellerProfile() {
 
                     {/* BASIC INFO STARTS */}
 
-            <View style={{marginTop: 20}}>
+            <View style={{marginTop: 10}}>
 
             <View style={{marginLeft : windowWidth*0.05 , flexDirection: "row" , marginTop: 10}}>
             <MaterialCommunityIcons name="clock-time-four-outline" color={"black"} size={24} />
@@ -158,9 +158,18 @@ function SellerProfile() {
 
 
             
-                    <View style={{flexDirection : "column" , alignItems: "center" , justifyContent: "center" , marginTop: 20}}>
+                    <View style={{flexDirection : "column" , alignItems: "center" , justifyContent: "center" , marginTop: 10 , marginBottom: 10}}>
 
-             <TouchableOpacity  onPress={() => {
+            <TouchableOpacity  onPress={() => {
+                 AsyncStorage.clear()
+                }}>
+                <View style={styles.submit2}>
+                <MaterialCommunityIcons name="pencil-outline" color={"white"} size={24} />
+                    <Text style={[styles.text1 , {marginLeft: windowWidth*0.03 ,}]}>Edit Profile</Text>
+                </View>
+            </TouchableOpacity>
+
+             <TouchableOpacity style={{marginTop: 20}} onPress={() => {
                  AsyncStorage.clear()
                 }}>
                 <View style={styles.submit}>
@@ -169,14 +178,7 @@ function SellerProfile() {
                 </View>
             </TouchableOpacity>
 
-             <TouchableOpacity style={{marginTop: 20}} onPress={() => {
-                 AsyncStorage.clear()
-                }}>
-                <View style={styles.submit2}>
-                <MaterialCommunityIcons name="pencil-outline" color={"white"} size={24} />
-                    <Text style={[styles.text1 , {marginLeft: windowWidth*0.03 ,}]}>Edit Profile</Text>
-                </View>
-            </TouchableOpacity>
+             
 
                 </View>
 

@@ -6,12 +6,13 @@ import { connect } from 'react-redux';
 import Header from '../consumer/ConsumerComponents/Header';
 import { url } from '../../api/api';
 import ListComponent from '../../components/ListComponent'
+import { fetchOrders } from '../../redux/seller/actions/ordersActions';
 
 const {height,width} = Dimensions.get('window')
 
 function SellerScreen(props) {
 
-    const [t,setT] = React.useState('')
+    const [t,setT] = React.useState('') 
     const [products , setProducts] = React.useState([]);
     const [loading , setLoading] = React.useState(false);
 
@@ -22,58 +23,28 @@ function SellerScreen(props) {
     }
 
     React.useEffect(() => {
-        setLoading(true)
+        setLoading(true) 
         getToken();
         fetchProducts();
-        setLoading(false)
     },[])
 
-    const addProduct = async() => {
-        //await uploadImageToFirebase();
-        const product = {
-            product_name:'new',
-            product_price: 10,
-            product_quantity: 5, 
-            //product_description: description,
-            product_image: '',
-            product_type: 'packaged'
-        }
-        var token = await AsyncStorage.getItem('shop_token');
-        console.log(token);
-        console.log(product);
-        axios.post(`${url}/shop/product`,product,{
-            headers: {
-                'Content-Type': 'application/json',
-                "Authorization": `Bearer ${token}`
-            }
-        }).then(res => {
-            console.log(res.data)
-        }).catch(err => {
-            console.log(err)
-        })
-    }
 
     const fetchProducts = async() => {
-        console.log("HERE");
+        console.log("HERE 11");
+
+
         var token = await AsyncStorage.getItem('shop_token');
-        console.log(token);
-        axios.get(`${url}/shop/orders`,{
-            headers: {
-                'Content-Type': 'application/json',
-                "Authorization": `Bearer ${token}`
-            }
-        }).then(res => {
-            console.log(res.data)
-            setProducts(res.data)
-        }).catch(err => {
-            console.log("error");
-            console.log(err)
-        })
+        await props.fetchOrders(token);
+        console.log("after redux");
+        // console.log(props.orders.sorders.orders);
+        await setProducts(props.orders.sorders.orders)
+        setLoading(false)
+
     }
 
     const renderItem = (item) => {
         return(
-        <ListComponent item={item} navigation={() => {
+        <ListComponent item={item} navigation={() => { 
             props.navigation.navigate("OrderDetails" , { item: item })
         }}/>
         )
@@ -84,7 +55,7 @@ function SellerScreen(props) {
             <Header backgroundColor='#0ae38c' header='Seller' height={55} width={width} />
             <View style={{marginTop: 20 , alignItems: "center"}}>
                 <View style={{height: height*0.06 , width: width*0.5 , borderRadius: 200 , backgroundColor: "#0ae38c" , alignItems: "center" , justifyContent: "center"}}>
-                    <Text style={{color: "white" , fontFamily: "Montserrat-ExtraBold" , fontSize: height*0.02}}>Current Orders</Text>
+                    <Text style={{color: "white" , fontFamily: "Montserrat-ExtraBold" , fontSize: height*0.02}}>New Orders</Text>
                 </View>
             </View>
             {/* <TouchableOpacity onPress={addProduct}>
@@ -92,7 +63,7 @@ function SellerScreen(props) {
             </TouchableOpacity> */}
             {/* <TouchableOpacity style={{width: 50 , height: 50 , backgroundColor: "orange"}} onPress={fetchProducts}>
                 <Text>Fetch Orders</Text>
-            </TouchableOpacity> */}
+            </TouchableOpacity> */} 
             {loading ?  <ActivityIndicator size="large" color="#00ff00" /> : 
             <View style={{marginTop: 10 , alignItems: "center" , marginBottom : height*0.17}}>
                 <FlatList 
@@ -138,4 +109,14 @@ const styles = StyleSheet.create({
     }
   });
 
-export default SellerScreen;
+  const mapStateToProps = (state) => {
+      return{
+          orders : state
+      }
+  }
+
+  const mapDispatchToProps = { 
+    fetchOrders
+  }
+
+export default connect(mapStateToProps , mapDispatchToProps)(SellerScreen);

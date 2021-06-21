@@ -5,7 +5,7 @@ import ListComponent from '../../../components/ListComponent';
 import { url } from '../../../api/api'
 import OrderStatusComponent from '../../../components/orderStatusComponent';
 
-function deliveredOrders() {
+function deliveredOrders(props) {
     const [ data , setData ] = React.useState([]) 
 
     let fetchOrders = async () => {
@@ -28,6 +28,14 @@ function deliveredOrders() {
         })
     } 
 
+    const renderItem = (item) => {
+        return(
+        <ListComponent item={item} navigation={() => {
+            props.navigation.navigate("OrderDetails" , { item: item })
+        }}/>
+        )
+    }
+
     React.useEffect(() => {
         fetchOrders()
     },[])
@@ -36,7 +44,7 @@ function deliveredOrders() {
             <View>
                 <FlatList
                     data={data}
-                    renderItem={OrderStatusComponent}
+                    renderItem={renderItem}
                 />
             </View> 
             

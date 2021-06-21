@@ -17,11 +17,10 @@ const [orders , setOrders] = React.useState([]);
 
 const OrderDetails =async (DATA) => {
     setLoading(true)
+    console.log(DATA);
     var token = await AsyncStorage.getItem('shop_token');
     console.log("ALL THE DETAILS");
     console.log(token);
-    console.log(`${url}/shop/orders/${DATA.order_cart_id}`);
-    console.log(DATA);
     axios.get(`${url}/shop/orders/${DATA.order_cart_id}`,{
         headers: {
             'Content-Type': 'application/json',
@@ -40,6 +39,15 @@ const OrderDetails =async (DATA) => {
     setLoading(false)
 }
 
+React.useEffect(() => {
+    // setLoading(true);
+    console.log("STARTING HERE");
+    console.log(props.route.params.item.item);
+    setData(props.route.params.item.item);
+    console.log("data here" , data);
+    OrderDetails(props.route.params.item.item);
+    // setLoading(fal);
+}, [])
 const renderItem = ({item}) => {
 
     return(
@@ -69,12 +77,6 @@ const renderItem = ({item}) => {
     )
 }
 
-React.useEffect(() => {
-    // setLoading(true);
-    setData(props.route.params.item.item);
-    OrderDetails(data);
-    // setLoading(fal);
-}, [])
 
     return (
         <ScrollView style={{flex: 1 , backgroundColor: "white"}}>
@@ -96,7 +98,7 @@ React.useEffect(() => {
 
                             <Text style={{fontFamily: "Montserrat-Bold" , fontSize: width*0.04}}>STATUS</Text>
                             <View style={{backgroundColor: "#0ae38c" ,width: width*0.5 , alignItems: "center"}}>
-                             <Text style={{color :"white" , fontSize: width*0.04, marginLeft: 5 , fontFamily: "Montserrat-Bold"}}>NOT DELIVERD</Text>
+                             <Text style={{color :"white" , fontSize: width*0.04, marginLeft: 5 , fontFamily: "Montserrat-Bold"}}>{data.delivery_status}</Text>
                             </View>
                             <Text style={{fontFamily: "Montserrat-Bold" , fontSize: width*0.04}}>PAYMENT</Text>
                             <View style={{backgroundColor: "#0ae38c" ,width: width*0.5 , alignItems: "center"}}>
