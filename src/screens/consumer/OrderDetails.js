@@ -8,6 +8,7 @@ import { url } from '../../api/api';
 import ShopCard from '../../components/ShopCard';
 import jwtDecode from 'jwt-decode';
 import dayjs from 'dayjs';
+import OrderSummaryProduct from './ConsumerComponents/OrderSummaryProduct';
 
 const {height,width} = Dimensions.get('window')
 
@@ -82,9 +83,13 @@ function ConsumerOrderDetails(props) {
                     </View>
                 </View>
                 <View style={{paddingLeft:25,paddingTop:15}}>
-                    <Text style={{fontSize:18,fontFamily: "Montserrat-Bold"}}>ORDER</Text>
+                    <Text style={{fontSize:18,fontFamily: "Montserrat-Bold",marginBottom:9}}>ORDER</Text>
+                    <FlatList
+                    data={data}
+                    renderItem={({item,index}) => <OrderSummaryProduct item={item} /> }
+                    />
                 </View>
-                <View style={{paddingLeft:25,paddingTop:15}}>
+                <View style={{paddingLeft:25,paddingTop:15,marginBottom:45}}>
                     <Text style={{fontSize:18,fontFamily: "Montserrat-Bold"}}>MORE DETAILS</Text>
                     <View style={{paddingLeft:15}}>
                     <Text style={{fontFamily: "Montserrat-Bold",fontSize:15.5,marginTop:5}}>ORDER ID</Text>

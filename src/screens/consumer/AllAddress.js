@@ -33,7 +33,7 @@ function AllAddress(props) {
                Authorization : `Bearer ${userToken}` 
             }
         }).then( res => {
-            console.log(res.data)
+            //console.log(res.data)
             setAll(res.data)
             setLoading(false)
         }).catch(err => {
@@ -82,9 +82,25 @@ function AllAddress(props) {
         props.navigation.pop();
     }
 
+    const addNewAddress = (item) => {
+        //var old = all;
+        setLoading(true);
+        setAll([item,...all]);
+        setLoading(false);
+    }
+
+    React.useEffect(() => {
+        console.log("Params Changed")
+        console.log(props.route)
+        if(props.route.params){
+            console.log("HIIIIIII")
+            addNewAddress(props.route.params.item)
+        }
+    },[props.route.params])
+
     return (
         <View style={{flex:1}}>
-            <HeaderWithButton backgroundColor='#ff6347' header='All Addresses' height={55} icon='plus' width={width} />
+            <HeaderWithButton callback={() => props.navigation.push('addAddress')} backgroundColor='#ff6347' header='All Addresses' height={55} icon='plus' width={width} />
             {
                 loading ?
                 <View style={{backgroundColor:'white',flex:1,alignItems:'center',justifyContent:'center'}}>

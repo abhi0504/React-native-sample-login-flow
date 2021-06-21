@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text,Dimensions,AsyncStorage,ScrollView,Image,FlatList,StatusBar, TouchableOpacity } from 'react-native';
+import { View, Text,Dimensions,Alert,AsyncStorage,ScrollView,Image,FlatList,StatusBar, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Header from './ConsumerComponents/Header';
@@ -37,12 +37,26 @@ function ConsumerProfile(props) {
 
     const logout = async() => {
         await AsyncStorage.removeItem('user_token')
-        props.navigation.replace('ChooseType')
+        props.navigation.replace('ChooseType') 
     }
+
+    const createTwoButtonAlert = () =>
+    Alert.alert(
+      "Confirm Logout",
+      "You will logout from this account.",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        { text: "OK", onPress: logout }
+      ]
+    );
 
     return (
        <ScrollView style={{flex:1,backgroundColor:'white'}}>
-           <HeaderWithButton callback={logout} icon="logout" backgroundColor='#ff6347' header='Profile' height={55} width={width} />
+           <HeaderWithButton callback={createTwoButtonAlert} icon="logout" backgroundColor='#ff6347' header='Profile' height={55} width={width} />
            {
                 loading ?
                 <View style={{backgroundColor:'white',height:height,flex:1,alignItems:'center',justifyContent:'center'}}>
