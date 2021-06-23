@@ -47,6 +47,8 @@ import AllAddress from './src/screens/consumer/AllAddress';
 import SellerProfile from './src/screens/seller/SellerProfile';
 import ordersOutForDelivery from './src/screens/seller/ordersStatus/ordersOutForDelivery';
 import deliveredOrders from './src/screens/seller/ordersStatus/deliveredOrders';
+import OrderSummary from './src/screens/consumer/OrderSummary';
+import AddAddress from './src/screens/consumer/AddAddress';
 
 
 
@@ -95,6 +97,19 @@ function STT() {
   )
 }
 
+const CartStack = createStackNavigator();
+
+function CartS() {
+  return (
+    <CartStack.Navigator screenOptions={{
+      headerShown: false
+    }}>
+      <CartStack.Screen name="CartItems" component={Cart} />
+      <CartStack.Screen name="OrderSummary" component={OrderSummary} />
+    </CartStack.Navigator>
+  )
+}
+
 function CPS() {
   return (
     <CProfileStack.Navigator screenOptions={{
@@ -102,6 +117,7 @@ function CPS() {
     }}>
       <CProfileStack.Screen name="myprofile" component={ConsumerProfile} />
       <CProfileStack.Screen name="allAddress" component={AllAddress} />
+      <CProfileStack.Screen name="addAddress" component={AddAddress} />
     </CProfileStack.Navigator>
   )
 }
@@ -233,7 +249,7 @@ function ConsumerStackScreens() {
           tabBarIcon: ({ color, size }) => (
             <CartIcon color={color} />
           ),
-        }} name="cart" component={Cart} />
+        }} name="cart" component={CartS} />
       <ConsumerStack.Screen
       options={{
         tabBarLabel: 'Orders',
