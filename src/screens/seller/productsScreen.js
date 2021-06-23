@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import Header from '../consumer/ConsumerComponents/Header';
 import { url } from '../../api/api';
 import ProductsList from '../../components/productsList'
+import { fetchProducts , addProducts } from '../../redux/seller/actions/productActions';
 
 const {height,width} = Dimensions.get('window')
 
@@ -24,45 +25,27 @@ function ProductsScreen(props) {
     React.useEffect(() => {
         setLoading(true)
         getToken();
-        fetchProducts();
+        fetch();
         setLoading(false)
     },[])
 
-    const fetchProducts = async() => {
+    React.useEffect(() => {
+        setLoading(true) 
+        setProducts(props.products)
+        setLoading(false)
+    },[props.products])
+
+    const fetch = async() => {
         console.log("HERE");
         var token = await AsyncStorage.getItem('shop_token');
-        console.log(token);
-        axios.get(`${url}/shop/products`,{
-            headers: {
-                'Content-Type': 'application/json',
-                "Authorization": `Bearer ${token}`
-            }
-        }).then(res => {
-            console.log(res.data)
-            setProducts(res.data)
-        }).catch(err => {
-            console.log("error");
-            console.log(err)
-        })
+        props.fetchProducts();
+        setProducts(props.products)
     }
 
     const addProducts = async (products) => {
         console.log(7);
-        var token = await AsyncStorage.getItem('shop_token');
-         axios.post(`${url}/shop/product`, products , {
-            headers: {
-                'Content-Type': 'application/json',
-                "Authorization": `Bearer ${token}`
-            }
-            })
-        .then(async(res) => {
-            console.log("response");
-            console.log(res.data);
-            props.navigation.navigate("productsScreen")
-        })
-        .catch(err => {
-            console.log(err);
-        })
+        props.addProducts(products)
+        props.navigation.navigate("productsScreen")
     }
 
     const renderItem = (item) => {
@@ -128,4 +111,15 @@ const styles = StyleSheet.create({
     }
   });
 
-export default ProductsScreen;
+  const mapStateToProps = (state) => {
+    return{
+        products : state.sproducts.products
+    }
+}
+
+const mapDispatchToProps = { 
+    fetchProducts,
+    addProducts
+}
+
+export default connect(mapStateToProps , mapDispatchToProps)(ProductsScreen);
