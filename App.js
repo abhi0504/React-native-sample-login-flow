@@ -68,6 +68,33 @@ const Pending = createStackNavigator();
 
 const CProfileStack = createStackNavigator();
 
+const SellerOverViewStack = createStackNavigator();
+
+const SellerTopTabsStack = createStackNavigator();
+
+
+function SOS() {
+  return (
+    <SellerOverViewStack.Navigator screenOptions={{
+      headerShown: false
+    }}>
+      <SellerOverViewStack.Screen name="sellerOverview" component={sellerOverview} />
+      <SellerOverViewStack.Screen name="OrderDetails" component={OrderDetails} />
+    </SellerOverViewStack.Navigator>
+  )
+}
+
+function STT() {
+  return (
+    <SellerTopTabsStack.Navigator screenOptions={{
+      headerShown: false
+    }}>
+      <SellerTopTabsStack.Screen name="SellerTopTabs" component={SellerTopTabs} />
+      <SellerTopTabsStack.Screen name="OrderDetails" component={OrderDetails} />
+    </SellerTopTabsStack.Navigator>
+  )
+}
+
 function CPS() {
   return (
     <CProfileStack.Navigator screenOptions={{
@@ -151,7 +178,7 @@ function SellerStackScreens() {
           tabBarIcon: ({ color, size }) => (
             <Icon2 name="shopping-store" color={color} size={25} />
           ),
-        }} name="shops" component={sellerOverview} />
+        }} name="shops" component={SOS} />
          <SellerStack.Screen options={{
           tabBarLabel: 'Shops',
           tabBarIcon: ({ color, size }) => (
@@ -164,7 +191,7 @@ function SellerStackScreens() {
         tabBarIcon: ({ color, size }) => (
           <Icon3 name="bag" color={color} size={size} />
         ),
-      }} name="Orders" component={SellerTopTabs} />
+      }} name="Orders" component={STT} />
       <SellerStack.Screen options={{
           tabBarLabel: 'Profile',
           tabBarIcon: ({ color, size }) => (

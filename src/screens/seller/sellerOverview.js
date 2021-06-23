@@ -28,18 +28,21 @@ function SellerScreen(props) {
         fetchProducts();
     },[])
 
+    React.useEffect(() => {
+        setLoading(true) 
+        setProducts(props.orders.sorders.orders)
+        setLoading(false)
+    },[props.orders.sorders.orders])
+
 
     const fetchProducts = async() => {
         console.log("HERE 11");
-
-
         var token = await AsyncStorage.getItem('shop_token');
         await props.fetchOrders(token);
         console.log("after redux");
         // console.log(props.orders.sorders.orders);
         await setProducts(props.orders.sorders.orders)
         setLoading(false)
-
     }
 
     const renderItem = (item) => {
@@ -98,7 +101,7 @@ const styles = StyleSheet.create({
         fontFamily: "Montserrat-Bold"
     },
     mid: {
-        flex: 0.3,
+        flex: 0.3, 
         flexDirection: "row",
         borderRadius: 20
     },
