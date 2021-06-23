@@ -68,6 +68,10 @@ const NearbyShopStack = createStackNavigator();
 
 const Pending = createStackNavigator();
 
+const COFD = createStackNavigator();
+
+const CD = createStackNavigator();
+
 const CProfileStack = createStackNavigator();
 
 const CartStack = createStackNavigator();
@@ -95,6 +99,17 @@ function CPS() {
   )
 }
 
+function CDS() {
+  return (
+    <CD.Navigator screenOptions={{
+      headerShown: false
+    }}>
+      <CD.Screen name="current" component={Delivered} />
+      <CD.Screen name="orderDetails" component={ConsumerOrderDetails} />
+    </CD.Navigator>
+  )
+}
+
 function PendingOrders() {
   return (
     <Pending.Navigator screenOptions={{
@@ -103,6 +118,17 @@ function PendingOrders() {
       <Pending.Screen name="current" component={CurrentOrders} />
       <Pending.Screen name="orderDetails" component={ConsumerOrderDetails} />
     </Pending.Navigator>
+  )
+}
+
+function COFDS() {
+  return (
+    <COFD.Navigator screenOptions={{
+      headerShown: false
+    }}>
+      <COFD.Screen name="current" component={OutForDelivery} />
+      <COFD.Screen name="orderDetails" component={ConsumerOrderDetails} />
+    </COFD.Navigator>
   )
 }
 
@@ -127,8 +153,8 @@ function MyTabs() {
       indicatorStyle:{backgroundColor:'white',height:'100%',borderTopLeftRadius:15,borderTopRightRadius:15},
     }}>
       <OrdersTab.Screen options={{ tabBarLabel: 'Orders Placed' }} name="Currentorders" component={PendingOrders} />
-      <OrdersTab.Screen options={{ tabBarLabel: 'Out For Delivery' }} name="OutForDelivery" component={OutForDelivery} />
-      <OrdersTab.Screen options={{ tabBarLabel: 'Delivered' }} name="Delivered" component={Delivered} />
+      <OrdersTab.Screen options={{ tabBarLabel: 'Out For Delivery' }} name="OutForDelivery" component={COFDS} />
+      <OrdersTab.Screen options={{ tabBarLabel: 'Delivered' }} name="Delivered" component={CDS} />
     </OrdersTab.Navigator>
   );
 }

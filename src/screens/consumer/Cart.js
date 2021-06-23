@@ -73,7 +73,7 @@ function Cart(props) {
                 "Authorization": `Bearer ${token}`
             }
         }).then(res => {
-            if(res.data!==data){
+            if(res.data!==data && res.data.length>0){
                 setData(res.data)
                 setTotal(res.data[0].cart_total)
                 const arr = groupBy(res.data,'shop_id')
@@ -83,6 +83,10 @@ function Cart(props) {
                 console.log(a)
                 setDict(arr)
                 SetSids(a);
+                setLoading(false)
+            } else {
+                setTotal(0);
+                setData([])
                 setLoading(false)
             }
         })
@@ -94,6 +98,7 @@ function Cart(props) {
 
     const makeList = sids.map(i => {
         return (
+            !loading &&
             <View style={{borderWidth:1,borderRadius:9,borderColor:'#ff6347',margin:9}}>
                 <View style={{alignItems:'center',padding:9}}>
                     <Text style={{fontSize:22.5,color:'#ff6347'}}>{dict[i][0].shop_name}</Text>
@@ -115,6 +120,7 @@ function Cart(props) {
     React.useEffect(() => {
         const unsubscribe = props.navigation.addListener('focus', () => {
           // do something
+          setLoading(true);
           console.log('hiiiiiiiiiiiiiiiiiiiiiiii');
           changeData()
         });
