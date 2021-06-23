@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, AsyncStorage,ScrollView,Button,Dimensions,Image,FlatList,StatusBar } from 'react-native';
+import { View, Text, AsyncStorage,ScrollView,Button,Dimensions,Alert,Image,FlatList,StatusBar } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Header from './ConsumerComponents/Header';
@@ -11,6 +11,8 @@ import jwtDecode from 'jwt-decode';
 import ordersReducer from '../../redux/consumer/reducers/ordersReducer';
 import OrderSummaryProduct from './ConsumerComponents/OrderSummaryProduct';
 import RNUpiPayment from 'react-native-upi-pay';
+import { setDeliveredOrders, setOutForDeliveryOrders,setCurrentOrders } from '../../redux/consumer/actions/orders';
+import { setCartProducts } from '../../redux/consumer/actions/cartActions';
 
 const {height,width} = Dimensions.get('window')
 
@@ -21,6 +23,7 @@ function OrderSummary(props) {
     const [shop,setShop] = React.useState({})
     const [consumer,setConsumer] = React.useState([])
     const [loading,setLoading] = React.useState(true)
+    const [orderDone,setOrderDone] = React.useState(false);
 
     const setData = async() => {
         setLoading(true)
@@ -61,6 +64,47 @@ function OrderSummary(props) {
         },successCallback,failureCallback);
     }
 
+    const placeOrder = async(payment_mode,payment_status) => {
+        var token = await AsyncStorage.getItem('user_token')
+
+        var orderP = {
+            payment_mode:payment_mode,
+            payment_status:payment_status,
+            shop_id:order[0].shop_id
+        }
+        console.log(orderP);
+        axios.post(`${url}/consumer/orderFromShop`,orderP,{
+            headers :{
+                Authorization: `Bearer ${token}`
+            }
+        }).then(res => {
+            console.log(res.data);
+            setOrderDone(true);
+            props.setCartProducts(token);
+            props.setCurrentOrders(token);
+            props.setOutForDeliveryOrders(token);
+            props.setDeliveredOrders(token)
+        })
+    }
+
+    const onPressCOD = () => {
+        placeOrder('cod','pending')
+    }
+
+    const createTwoButtonAlert = () =>
+    Alert.alert(
+      "Confirm Order",
+      "Payment Method is Cash On Delivery. Pay On delivery.",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        { text: "OK", onPress: onPressCOD }
+      ]
+    );
+
     return (
         <View style={{flex:1,backgroundColor:'white'}}>
             <Header backgroundColor='#ff6347' header='Order Details' height={55} width={width} />
@@ -88,8 +132,11 @@ function OrderSummary(props) {
                     renderItem={({item,index}) => <OrderSummaryProduct item={item} /> }
                     />
                 </View>
-                <Text style={{fontSize:22.5,color:'black',fontFamily: "Montserrat-Medium"}}>Payment Method</Text>
-                <View>
+                {
+                    !orderDone ?
+                    <View>
+                        <Text style={{fontSize:22.5,color:'black',fontFamily: "Montserrat-Medium"}}>Payment Method</Text>
+                        <View>
                     {
                         order[0].shop_upiId!=='undefined' &&
                         <TouchableWithoutFeedback onPress={makeUpiPayment}>
@@ -100,16 +147,41 @@ function OrderSummary(props) {
                     }
                 </View>
                 <View style={{marginTop:9}}>
-                <TouchableWithoutFeedback>
+                <TouchableWithoutFeedback onPress={createTwoButtonAlert}>
                     <View style={{padding:7.5,alignItems:'center',marginBottom:25,backgroundColor:"#ff6347",borderRadius:9}}>
                         <Text style={{fontSize:21.5,color:'white',fontFamily: "Montserrat-Medium"}}>Cash On Delivery</Text>
                     </View>
                 </TouchableWithoutFeedback>
                 </View>
+                    </View>
+                    :
+                    <View style={{marginTop:0,alignItems:'center'}}>
+                        <Text style={{fontSize:25,marginBottom:9,color:'#ff6347',fontFamily: "Montserrat-Medium"}}>Order Placed</Text>
+                        <Image source={require('../../images/os.gif')} style={{width:width,height:width}} />
+                    </View>
+                }
             </ScrollView>
             }
         </View>
     )
 }
 
-export default OrderSummary;
+OrderSummary.propTypes = {
+    setDeliveredOrders:PropTypes.func.isRequired,
+    setOutForDeliveryOrders:PropTypes.func.isRequired,
+    setCurrentOrders:PropTypes.func.isRequired,
+    setCartProducts:PropTypes.func.isRequired
+}
+
+const mapStateToProps = (state) => ({
+    orders:state.orders
+})
+
+const mapActionsToProps = {
+    setDeliveredOrders,
+    setCurrentOrders,
+    setOutForDeliveryOrders,
+    setCartProducts
+}
+
+export default connect(mapStateToProps,mapActionsToProps)(OrderSummary);

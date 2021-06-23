@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux'
 import { setLocation } from '../../redux/consumer/actions/latlngactions';
 import jwt_decode from "jwt-decode";
+import { setCartProducts } from '../../redux/consumer/actions/cartActions';
 
 const {height,width} = Dimensions.get('window')
 function ConsumerSignin(props) {
@@ -29,6 +30,7 @@ function ConsumerSignin(props) {
             var decodedToken = jwt_decode(token);
             await AsyncStorage.setItem('user_token',token);
             props.setLocation(decodedToken.latitude,decodedToken.longitude);
+            props.setCartProducts(token);
             setLoading(false);
             props.navigation.reset({
                 index: 0,
@@ -95,6 +97,7 @@ const styles = StyleSheet.create({
 
 ConsumerSignin.propTypes = {
     setLocation: PropTypes.func.isRequired,
+    setCartProducts:PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => ({
@@ -102,7 +105,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapActionsToProps = {
-    setLocation
+    setLocation,
+    setCartProducts
 }
 
 export default connect(mapStateToProps,mapActionsToProps)(ConsumerSignin);
