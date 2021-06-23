@@ -10,7 +10,7 @@ const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 
-function SellerProfile() {
+function SellerProfile(props) {
 
     const [info , setInfo] = React.useState([]);
 
@@ -78,7 +78,7 @@ function SellerProfile() {
                 <Image
                     style={{
                         height: windowHeight*0.12      ,
-                        width: windowWidth*0.24,
+                        width: windowHeight*0.12 ,
                         marginTop: 20
                     }}
                     source={require('../../images/user.png')}
@@ -102,7 +102,7 @@ function SellerProfile() {
 
                     {/* BASIC INFO STARTS */}
 
-            <View style={{marginTop: 10}}>
+            <View style={{}}>
 
             <View style={{marginLeft : windowWidth*0.05 , flexDirection: "row" , marginTop: 10}}>
             <MaterialCommunityIcons name="clock-time-four-outline" color={"black"} size={24} />
@@ -110,7 +110,7 @@ function SellerProfile() {
                 <Text style={styles.text}>
                     TIMINGS
                 </Text>
-                <Text style={[styles.text , {marginLeft: windowWidth*0.1}]}>
+                <Text style={[styles.text]}>
                     {info.shop_timing}
                 </Text>
             </View>
@@ -122,7 +122,7 @@ function SellerProfile() {
                 <Text style={styles.text}>
                     LOCATION 
                 </Text>
-                <Text style={[styles.text , {marginLeft: windowWidth*0.1}]}>
+                <Text style={[styles.text]}>
                     {info.shop_location}
                 </Text>
             </View>
@@ -134,7 +134,7 @@ function SellerProfile() {
                 <Text style={styles.text}>
                     CONTACT 
                 </Text>
-                <Text style={[styles.text , {marginLeft: windowWidth*0.1}]}>
+                <Text style={[styles.text]}>
                     {info.shop_contact}
                 </Text>
             </View>
@@ -147,7 +147,7 @@ function SellerProfile() {
                 <Text style={styles.text}>
                     UPI ID 
                 </Text>
-                <Text style={[styles.text , {marginLeft: windowWidth*0.1}]}>
+                <Text style={[styles.text]}>
                     {info.shop_upiID ? info.shop_upiID : "9999999999"}
                 </Text>
             </View>
@@ -155,13 +155,11 @@ function SellerProfile() {
 
 
             </View>
-
-
             
                     <View style={{flexDirection : "column" , alignItems: "center" , justifyContent: "center" , marginTop: 10 , marginBottom: 10}}>
 
             <TouchableOpacity  onPress={() => {
-                 AsyncStorage.clear()
+                 console.log(props);
                 }}>
                 <View style={styles.submit2}>
                 <MaterialCommunityIcons name="pencil-outline" color={"white"} size={24} />
@@ -169,17 +167,15 @@ function SellerProfile() {
                 </View>
             </TouchableOpacity>
 
-             <TouchableOpacity style={{marginTop: 20}} onPress={() => {
-                 AsyncStorage.clear()
+             <TouchableOpacity style={{marginTop: 20}} onPress={async () => {
+                 await AsyncStorage.clear();
+                 props.navigation.navigate("ChooseType");
                 }}>
                 <View style={styles.submit}>
                 <MaterialCommunityIcons name="logout" color={"white"} size={24} />
                     <Text style={[styles.text1 , {marginLeft: windowWidth*0.03 ,}]}>Log Out</Text>
                 </View>
             </TouchableOpacity>
-
-             
-
                 </View>
 
         </ScrollView>

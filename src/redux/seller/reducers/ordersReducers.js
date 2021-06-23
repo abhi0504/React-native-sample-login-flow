@@ -1,7 +1,9 @@
-import { FETCH_ORDERS , FETCH_OFD_ORDERS } from "../types";
+import { FETCH_ORDERS , FETCH_OFD_ORDERS , FETCH_D_ORDERS } from "../types";
 
 const initialState = {
     orders:[],
+    OFDOrders:[],
+    DOrders: [],
     total:0,
     number:0
 }
@@ -19,7 +21,12 @@ export default function(state=initialState,action) {
         case FETCH_OFD_ORDERS:
             return {
                 ...state,
-                // HERE RETURN AFTER LOOPING AND SEARCHING
+                OFDOrders: action.orders
+            }
+        case FETCH_D_ORDERS: 
+            return{
+                ...state,
+                DOrders: action.orders
             }
         default:
             return state

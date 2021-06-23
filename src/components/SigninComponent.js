@@ -114,27 +114,7 @@ class SigninComponent extends Component {
                          Login
                      </Text>
                 </TouchableOpacity>
-                <Text style={{color: "grey" , fontFamily: 'Montserrat-Light' , margin: 10}}>Login account with</Text>
             </View> 
-
-            <View style={{flexDirection: "row" , justifyContent: "center"}}>
-                <Image style={{
-                height: windowHeight*0.05,
-                width: windowHeight*0.05,
-              }}
-              source={require('../../assets/loginImages/MediaHandles/GoogleSignUp.png')}/>
-              <Image style={{
-                height: windowHeight*0.05,
-                width: windowHeight*0.05,
-              }}
-              source={require('../../assets/loginImages/MediaHandles/FacebookSignUp.png')}/>
-              <Image style={{
-                height: windowHeight*0.05,
-                width: windowHeight*0.05,
-              }}
-              source={require('../../assets/loginImages/MediaHandles/LinkedinSignUp.png')}/>
-            </View>
-            
             
         </View>
     );

@@ -2,31 +2,18 @@ import { View, Text, AsyncStorage,Image,Dimensions,FlatList, TouchableOpacity } 
 import React from 'react';
 import axios from 'axios';
 import ListComponent from '../../../components/ListComponent';
-import { url } from '../../../api/api'
-import OrderStatusComponent from '../../../components/orderStatusComponent';
+import { fetchOFDOrders } from "../../../redux/seller/actions/ordersActions";
+import { connect } from 'react-redux';
 
 function ordersOutForDelivery(props) {
 
     const [ data , setData ] = React.useState([]) 
 
     let fetchOrders = async () => {
-        console.log("NO PLS NO");
-        console.log("NETWORK ERROR");
 
-        var token = await AsyncStorage.getItem('shop_token');
-        axios.get(`${url}/orders/outForDelivery`,{
-            headers: {
-                'Content-Type': 'application/json',
-                "Authorization": `Bearer ${token}`
-            }
-        }).then(res => {
-            console.log(":+:+:++:+:+:+:++:");
-            console.log(res.data)
-            setData(res.data)
-        }).catch(err => {
-            console.log("error");
-            console.log(err)
-        })
+        await props.fetchOFDOrders();
+ 
+        setData(props.orders.OFDOrders)
     } 
 
     const renderItem = (item) => {
@@ -37,6 +24,10 @@ function ordersOutForDelivery(props) {
         )
     }
 
+    React.useEffect(() => {
+        setData(props.orders.OFDOrders)
+    },[props.orders.OFDOrders])
+ 
     React.useEffect(() => {
         fetchOrders()
     },[])
@@ -52,4 +43,14 @@ function ordersOutForDelivery(props) {
         )
     }
 
-export default ordersOutForDelivery
+    const mapStateToProps = (state) => {
+        return{
+            orders : state.sorders
+        }
+    }
+    
+    const mapDispatchToProps = { 
+        fetchOFDOrders
+    }
+    
+    export default connect(mapStateToProps , mapDispatchToProps)(ordersOutForDelivery);

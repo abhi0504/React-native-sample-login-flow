@@ -1,11 +1,15 @@
 import axios from 'axios';
 import * as React from 'react';
-import { View,TouchableOpacity, Text,Button,FlatList,ActivityIndicator } from 'react-native';
+import { View,TouchableOpacity, Text,Dimensions,FlatList,ActivityIndicator } from 'react-native';
+
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 
 function StyleButton(props) {
     return (
         <TouchableOpacity onPress={props.onPressButton} style={{height:props.height,alignItems:'center',justifyContent:'center',width:props.width,borderRadius:props.borderRadius,backgroundColor:props.backgroundColor}}>
-            <Text style={{color:props.color,fontSize:props.fontSize}}>{props.title}</Text>
+            {props.image ? props.image : <View />}
+            <Text style={{color:props.color,fontSize:props.fontSize , fontFamily: "Montserrat-ExtraBold"}}>{props.title}</Text>
         </TouchableOpacity>
     )
 }
