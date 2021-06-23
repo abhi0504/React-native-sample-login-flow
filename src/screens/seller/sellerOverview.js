@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import Header from '../consumer/ConsumerComponents/Header';
 import { url } from '../../api/api';
 import ListComponent from '../../components/ListComponent'
-import { fetchOrders } from '../../redux/seller/actions/ordersActions';
+import { fetchOrders , orderReadyForDelivery } from '../../redux/seller/actions/ordersActions';
 
 const {height,width} = Dimensions.get('window')
 
@@ -49,7 +49,7 @@ function SellerScreen(props) {
         return(
         <ListComponent item={item} navigation={() => { 
             props.navigation.navigate("OrderDetails" , { item: item })
-        }}/>
+        }} />
         )
     }
 
@@ -119,7 +119,8 @@ const styles = StyleSheet.create({
   }
 
   const mapDispatchToProps = { 
-    fetchOrders
+    fetchOrders,
+    orderReadyForDelivery
   }
 
 export default connect(mapStateToProps , mapDispatchToProps)(SellerScreen);

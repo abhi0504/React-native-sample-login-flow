@@ -1,12 +1,52 @@
 import * as React from 'react';
 import axios from 'axios';
-import { View, Text, AsyncStorage,Dimensions , TouchableOpacity , ActivityIndicator , FlatList , StyleSheet ,Image } from 'react-native';
+import { View, Text, Alert,Dimensions , TouchableOpacity , ActivityIndicator , FlatList , StyleSheet ,Image } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux'; 
+import { fetchOrders , orderReadyForDelivery , orderDelivered } from '../redux/seller/actions/ordersActions';
 
 const {height,width} = Dimensions.get('window')
 
-function ListComponent({item , navigation}) {
+function ListComponent({item , navigation , fetchOrders , orderReadyForDelivery , orderDelivered }) {
+
+    const orderReadyForDeliveryAlert = () =>
+    Alert.alert(
+      "Order Ready ?",
+      "Are you sure that the Order of " + item.item.consumer_name + " is ready for delivery",
+      [
+        {
+          text: "No",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        { text: "Yes", onPress: async () => {
+            console.log("Yes");
+            await orderReadyForDelivery(item.item);
+        } }
+      ]
+    );
+
+    const orderDeliveredAlert = () =>
+    Alert.alert(
+      "Order Delivered ?",
+      "Are you sure that the Order of " + item.item.consumer_name + " is delivered",
+      [
+        {
+          text: "No",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        { text: "Yes", onPress: async () => {
+            await orderDelivered(item.item);
+        } }
+      ]
+    );
+
+    const DeliveredAlert = () =>
+    Alert.alert(
+      "Order Delivered ?",
+      "This Order of " + item.item.consumer_name + " is already delivered",
+    );
     // console.log(item);
     return(
         <View>
@@ -18,7 +58,6 @@ function ListComponent({item , navigation}) {
                                 style={{height: height*0.065 , width: width*0.13 , marginLeft: 10}}
                                 source={require('../images/user.png')}
                             />
-
                             <View style={[{flexDirection: "column" ,justifyContent: "center" , marginLeft: 5}]}>
                                 <Text style={styles.text}>{item.item.consumer_name}</Text>
                                 <Text style={styles.text}>{item.item.consumer_contact}</Text>
@@ -44,6 +83,22 @@ function ListComponent({item , navigation}) {
                         </View>
                             <Text style={styles.text}>{item.item.ordered_time}</Text>
                     </View>
+
+                    <TouchableOpacity style={{alignItems: "center" , marginBottom: 10}} onPress={() => {
+                        if(item.item.delivery_status == "pending")
+                        orderReadyForDeliveryAlert()
+                        else if(item.item.delivery_status == "Out For Delivery")
+                        orderDeliveredAlert()
+                        else if(item.item.delivery_status == "Delivered")
+                        DeliveredAlert()
+                    }}>
+                        <View style={styles.order}>
+                            <Text style={[styles.text , {color: "white"}]}>
+                                {item.item.delivery_status == "pending" ? "Order Ready For Delivery/Pickup" :  item.item.delivery_status == "Out For Delivery" ? "Click if Order is Delivered" : "Delivered" }
+                            </Text>
+                        </View>
+                    </TouchableOpacity>
+
                 </View>
             </TouchableOpacity>
         </View>
@@ -53,7 +108,7 @@ function ListComponent({item , navigation}) {
 const styles = StyleSheet.create({
     renderItem: {
         flex: 1,
-        height: height*0.28 , 
+        height: height*0.38 , 
         width: width*0.95 ,  
         margin: 8 , 
         backgroundColor: "white",
@@ -76,10 +131,30 @@ const styles = StyleSheet.create({
         borderRadius: 20
     },
     bottom: {
-        flex: 0.4,
+        flex: 0.3,
+        justifyContent: "center",
+        alignItems: "center"
+    },
+    order: {
+        height: height*0.06 , 
+        borderRadius: 20,
+        width: width*0.65 , 
+        backgroundColor: "red",
         justifyContent: "center",
         alignItems: "center"
     }
   });
 
-export default ListComponent;
+  const mapStateToProps = (state) => {
+    return{
+        orders : state
+    }
+}
+
+const mapDispatchToProps = { 
+  fetchOrders,
+  orderReadyForDelivery,
+  orderDelivered
+}
+
+export default connect(mapStateToProps , mapDispatchToProps)(ListComponent);

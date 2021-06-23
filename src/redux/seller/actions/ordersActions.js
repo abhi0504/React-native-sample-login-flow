@@ -1,11 +1,11 @@
 import { url } from "../../../api/api"
 import axios from "axios"
 import { AsyncStorage } from "react-native"
-import { FETCH_ORDERS ,  FETCH_OFD_ORDERS ,  FETCH_D_ORDERS} from "../types"
+import { FETCH_ORDERS ,  FETCH_OFD_ORDERS ,  FETCH_D_ORDERS , ORDER_READY_FOR_DELIVERY , ORDER_DELIVERED} from "../types"
 
-export const fetchOrders = (token) => dispatch => {
+export const fetchOrders = () => async dispatch => {
     console.log("Comming for redux"); 
-
+    var token = await AsyncStorage.getItem('shop_token');
     axios.get(`${url}/shop/orders`,{
     headers: {
         'Content-Type': 'application/json',
@@ -54,3 +54,54 @@ export const fetchDOrders = () => async dispatch => {
     })
 }
 
+export const orderReadyForDelivery = (item) => async dispatch => {
+    console.log("Comming for redux"); 
+    var token = await AsyncStorage.getItem('shop_token');
+
+    console.log("IAMHERE_+_++_+_+_+_+_+_+_+_++__+_+_+_+_");
+
+    axios.post(`${url}/order/${item.order_cart_id}`, {
+        type: "OutForDelivery"
+    } , {
+        headers: {
+            'Content-Type': 'application/json',
+            "Authorization": `Bearer ${token}`
+        }
+        })
+    .then(async(res) => {
+        console.log("))))))))))))))))))))))))))))))))");
+        console.log("response");
+        console.log(res.data);
+        dispatch({type:ORDER_READY_FOR_DELIVERY,item: item})
+    })
+    .catch(err => {
+        console.log("((((((((((((((((((((((((((((((((((");
+        console.log(err);
+    })
+}
+
+export const orderDelivered = (item) => async dispatch => {
+    console.log("Comming for redux"); 
+    var token = await AsyncStorage.getItem('shop_token');
+
+    console.log("IAMHERE_+_++_+_+_+_+_+_+_+_++__+_+_+_+_");
+
+    axios.post(`${url}/order/${item.order_cart_id}`, {
+        type: "Delivered"
+    } , {
+        headers: {
+            'Content-Type': 'application/json',
+            "Authorization": `Bearer ${token}`
+        }
+        })
+    .then(async(res) => {
+        console.log("))))))))))))))))))))))))))))))))");
+        console.log("response");
+        console.log(res.data);
+        dispatch({type:ORDER_DELIVERED,item: item})
+    })
+    .catch(err => {
+        console.log("((((((((((((((((((((((((((((((((((");
+        console.log(err);
+    })
+}
