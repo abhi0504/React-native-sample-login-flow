@@ -49,6 +49,7 @@ import ordersOutForDelivery from './src/screens/seller/ordersStatus/ordersOutFor
 import deliveredOrders from './src/screens/seller/ordersStatus/deliveredOrders';
 import OrderSummary from './src/screens/consumer/OrderSummary';
 import AddAddress from './src/screens/consumer/AddAddress';
+import ConsumerSearch from './src/screens/consumer/ConsumerSearch';
 
 
 
@@ -269,7 +270,7 @@ function ConsumerStackScreens() {
           tabBarIcon: ({ color, size }) => (
             <Icon2 name="search" color={color} size={25} />
           ),
-        }} name="search" component={Orders} />
+        }} name="search" component={ConsumerSearch} />
         <ConsumerStack.Screen options={{
           tabBarLabel: 'Shops',
           tabBarIcon: ({ color, size }) => (

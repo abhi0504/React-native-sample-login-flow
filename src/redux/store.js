@@ -4,6 +4,7 @@ import cartReducer from './consumer/reducers/cartReducer';
 
 import latlngreducer from './consumer/reducers/latlngreducer';
 import ordersReducer from './consumer/reducers/ordersReducer';
+import productReducer from './consumer/reducers/productReducer';
 import sordersReducer from './seller/reducers/ordersReducers';
 import sproductsReducer from './seller/reducers/productReducers'
 
@@ -16,7 +17,8 @@ const reducers = combineReducers({
     cartItems:cartReducer,
     orders:ordersReducer,
     sorders: sordersReducer,
-    sproducts: sproductsReducer
+    sproducts: sproductsReducer,
+    allProducts : productReducer
 })
 
 const store = createStore(reducers,initialState,compose(applyMiddleware(...middleware)))
